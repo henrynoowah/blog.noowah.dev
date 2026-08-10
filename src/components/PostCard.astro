@@ -1,15 +1,17 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import { t, type Locale } from "../i18n/ui";
+import type { Area } from "../i18n/areas";
 
 interface Props {
-  post: CollectionEntry<"blog">;
+  post: CollectionEntry<Area>;
   href: string;
   index: number;
   locale: Locale;
+  areaLabel?: string;
 }
 
-const { post, href, index, locale } = Astro.props;
+const { post, href, index, locale, areaLabel } = Astro.props;
 const { title, description, pubDate, tags } = post.data;
 const dateLabel = new Intl.DateTimeFormat(locale, { dateStyle: "long" }).format(pubDate);
 const num = String(index + 1).padStart(2, "0");
@@ -26,12 +28,21 @@ const num = String(index + 1).padStart(2, "0");
       {num}
     </span>
     <div>
-      <time
-        datetime={pubDate.toISOString()}
-        class="font-mono text-[0.7rem] uppercase tracking-widest text-[var(--color-ink-muted)]"
-      >
-        {dateLabel}
-      </time>
+      <div class="flex flex-wrap items-center gap-3">
+        <time
+          datetime={pubDate.toISOString()}
+          class="font-mono text-[0.7rem] uppercase tracking-widest text-[var(--color-ink-muted)]"
+        >
+          {dateLabel}
+        </time>
+        {areaLabel && (
+          <span
+            class="rounded-full border border-[var(--color-rule)] px-2.5 py-0.5 font-mono text-[0.6rem] uppercase tracking-widest text-[var(--color-ink-muted)]"
+          >
+            {areaLabel}
+          </span>
+        )}
+      </div>
       <h2
         class="mt-1 font-display text-2xl font-semibold leading-snug text-[var(--color-ink)] transition-colors group-hover:text-[var(--color-accent)] sm:text-3xl"
       >

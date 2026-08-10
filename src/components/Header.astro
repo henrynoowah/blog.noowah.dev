@@ -2,6 +2,7 @@
 import LanguageSwitcher from "./LanguageSwitcher.astro";
 import ThemeToggle from "./ThemeToggle.astro";
 import { t, type Locale } from "../i18n/ui";
+import { areas, areaLabel, areaHref } from "../i18n/areas";
 
 interface Props {
   locale: Locale;
@@ -11,7 +12,7 @@ const { locale } = Astro.props;
 ---
 
 <header class="site-header px-6 pt-10 sm:px-10 sm:pt-14">
-  <div class="mx-auto flex max-w-3xl flex-wrap items-start justify-between gap-6">
+  <div class="mx-auto flex max-w-5xl flex-wrap items-start justify-between gap-6">
     <a href={`/${locale}/`} class="group inline-block">
       <span
         class="block font-display text-4xl font-semibold tracking-tight text-[var(--color-ink)] sm:text-5xl"
@@ -26,12 +27,16 @@ const { locale } = Astro.props;
     </a>
 
     <div class="flex items-center gap-3 pt-2">
-      <a
-        href={`/${locale}/`}
-        class="font-mono text-xs uppercase tracking-widest text-[var(--color-ink-muted)] transition-colors hover:text-[var(--color-ink)]"
-      >
-        {t(locale, "nav.writing")}
-      </a>
+      {
+        areas.map((area) => (
+          <a
+            href={areaHref(locale, area)}
+            class="font-mono text-xs uppercase tracking-widest text-[var(--color-ink-muted)] transition-colors hover:text-[var(--color-ink)]"
+          >
+            {areaLabel(locale, area)}
+          </a>
+        ))
+      }
       <div
         class="flex items-center gap-3 rounded-full border border-[var(--color-rule)] px-3 py-1.5"
       >
@@ -41,5 +46,5 @@ const { locale } = Astro.props;
       </div>
     </div>
   </div>
-  <div class="mx-auto mt-8 max-w-3xl border-t border-[var(--color-rule)]"></div>
+  <div class="mx-auto mt-8 max-w-5xl border-t border-[var(--color-rule)]"></div>
 </header>

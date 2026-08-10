@@ -1,25 +1,26 @@
 ---
-import { getCollection, render } from "astro:content";
+import { render } from "astro:content";
 import BaseLayout from "../../../layouts/BaseLayout.astro";
-import { languages, t, type Locale } from "../../../i18n/ui";
+import { languages, type Locale } from "../../../i18n/ui";
+import { areas, areaLabel, type Area } from "../../../i18n/areas";
+import { getAreaPosts, slugOf } from "../../../lib/posts";
 
 export async function getStaticPaths() {
-  const paths = [];
-  for (const locale of Object.keys(languages) as Locale[]) {
-    const posts = (await getCollection("blog", (entry) => entry.id.startsWith(`${locale}/`))).filter(
-      (entry) => !entry.data.draft
-    );
-    for (const post of posts) {
-      paths.push({
-        params: { locale, slug: post.id.slice(locale.length + 1) },
-        props: { post },
-      });
-    }
-  }
-  return paths;
+  const groups = await Promise.all(
+    (Object.keys(languages) as Locale[]).flatMap((locale) =>
+      areas.map(async (area) => {
+        const posts = await getAreaPosts(area, locale);
+        return posts.map((post) => ({
+          params: { locale, area, slug: slugOf(post, locale) },
+          props: { post },
+        }));
+      })
+    )
+  );
+  return groups.flat();
 }
 
-const { locale } = Astro.params as { locale: Locale };
+const { locale, area } = Astro.params as { locale: Locale; area: Area };
 const { post } = Astro.props;
 const { title, description, pubDate, tags } = post.data;
 const { Content } = await render(post);
@@ -27,22 +28,24 @@ const dateLabel = new Intl.DateTimeFormat(locale, { dateStyle: "long" }).format(
 ---
 
 <BaseLayout title={title} description={description}>
-  <article class="mx-auto max-w-2xl px-6 pb-24 pt-4 sm:px-10">
+  <article class="mx-auto max-w-5xl px-6 pb-24 pt-4 sm:px-10">
     <a
-      href={`/${locale}/`}
+      href={`/${locale}/${area}/`}
       class="inline-flex items-center gap-1 font-mono text-xs uppercase tracking-widest text-[var(--color-ink-muted)] transition-colors hover:text-[var(--color-accent)]"
     >
-      ← {t(locale, "post.back")}
+      ← {areaLabel(locale, area)}
     </a>
 
-    <header class="mt-8 border-b border-[var(--color-rule)] pb-8">
+    <header class="mt-8 max-w-2xl border-b border-[var(--color-rule)] pb-8">
       <time
         datetime={pubDate.toISOString()}
         class="font-mono text-[0.7rem] uppercase tracking-widest text-[var(--color-ink-muted)]"
       >
         {dateLabel}
       </time>
-      <h1 class="mt-2 font-display text-3xl font-semibold leading-tight text-[var(--color-ink)] sm:text-4xl">
+      <h1
+        class="mt-2 font-display text-3xl font-bold leading-tight text-[var(--color-ink)] sm:text-4xl"
+      >
         {title}
       </h1>
       {tags.length > 0 && (
@@ -58,7 +61,7 @@ const dateLabel = new Intl.DateTimeFormat(locale, { dateStyle: "long" }).format(
       )}
     </header>
 
-    <div class="prose mt-10">
+    <div class="prose mt-10 max-w-2xl">
       <Content />
     </div>
   </article>

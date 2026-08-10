@@ -14,16 +14,36 @@ i18n:
   default_locale: en
 
 collections:
-  - name: "blog"
-    label: "Blog"
-    folder: "src/content/blog"
+  - name: "dev"
+    label: "Dev"
+    label_singular: "Dev post"
+    folder: "src/content/dev"
     create: true
     slug: "{{slug}}"
+    sortable_fields: ["pubDate", "title"]
     i18n: true
     fields:
       - { label: "Title", name: "title", widget: "string", i18n: true }
       - { label: "Description", name: "description", widget: "text", i18n: true }
-      - { label: "Publish Date", name: "pubDate", widget: "datetime" }
-      - { label: "Tags", name: "tags", widget: "list", default: [] }
-      - { label: "Draft", name: "draft", widget: "boolean", default: false }
+      # i18n: duplicate — without it these are written only to the default-locale
+      # file, and the ko build fails Zod validation on a missing pubDate.
+      - { label: "Publish Date", name: "pubDate", widget: "datetime", i18n: duplicate }
+      - { label: "Tags", name: "tags", widget: "list", default: [], i18n: duplicate }
+      - { label: "Draft", name: "draft", widget: "boolean", default: false, i18n: duplicate }
+      - { label: "Body", name: "body", widget: "markdown", i18n: true }
+
+  - name: "hobbies"
+    label: "Hobbies"
+    label_singular: "Hobby post"
+    folder: "src/content/hobbies"
+    create: true
+    slug: "{{slug}}"
+    sortable_fields: ["pubDate", "title"]
+    i18n: true
+    fields:
+      - { label: "Title", name: "title", widget: "string", i18n: true }
+      - { label: "Description", name: "description", widget: "text", i18n: true }
+      - { label: "Publish Date", name: "pubDate", widget: "datetime", i18n: duplicate }
+      - { label: "Tags", name: "tags", widget: "list", default: [], i18n: duplicate }
+      - { label: "Draft", name: "draft", widget: "boolean", default: false, i18n: duplicate }
       - { label: "Body", name: "body", widget: "markdown", i18n: true }

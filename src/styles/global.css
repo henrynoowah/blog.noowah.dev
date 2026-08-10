@@ -89,6 +89,72 @@ body {
   border-color: color-mix(in oklab, var(--color-accent) 45%, transparent);
 }
 
+/* landing hero: the .site-header wash, scaled up and layered to fill a viewport.
+   Painted on a masked pseudo-element so the wash fades in/out instead of ending
+   on a hard seam at the section edges. */
+.hero-glow {
+  position: relative;
+}
+.hero-glow::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(
+      900px circle at 8% -10%,
+      color-mix(in oklab, var(--color-accent) 22%, transparent),
+      transparent 65%
+    ),
+    radial-gradient(
+      600px circle at 92% 12%,
+      color-mix(in oklab, var(--color-accent) 10%, transparent),
+      transparent 70%
+    );
+  background-repeat: no-repeat;
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 18%, #000 70%, transparent);
+  mask-image: linear-gradient(to bottom, transparent, #000 18%, #000 70%, transparent);
+}
+
+/* full-width area rows: accent wash sweeps up from the baseline on hover */
+.area-row::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: color-mix(in oklab, var(--color-accent) 9%, transparent);
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.area-row:hover::before {
+  transform: scaleY(1);
+}
+
+/* staggered load-in for above-the-fold hero lines (scroll-reveal can't stagger these) */
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.rise {
+  animation: rise-in 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .rise {
+    animation: none;
+  }
+  .area-row::before {
+    transition: none;
+  }
+}
+
 /* scroll-reveal, progressively enhanced; no-op where unsupported or reduced-motion is set */
 @supports (animation-timeline: view()) {
   .reveal {
@@ -119,7 +185,6 @@ body {
   font-size: 1.125rem;
   line-height: 1.75;
   color: var(--color-ink);
-  max-width: 100%;
 }
 .prose > * + * {
   margin-top: 1.4em;
