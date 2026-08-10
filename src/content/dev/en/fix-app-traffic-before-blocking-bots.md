@@ -45,30 +45,54 @@ directly to Azure WAF.
 ## Remove log noise before tuning the WAF
 
 Before changing the WAF, we fixed malformed asset URLs and invalid API requests caused
-by runtime configuration that was not ready. Those application-generated bad
-requests fell by more than 90%.
+by runtime configuration that was not ready. That work was not a WAF result; it was
+baseline cleanup so product defects would not be mixed with attack traffic in the logs.
 
 That cleanup made precise WAF tuning possible. If the application keeps generating broken requests,
 attack traffic and product defects become mixed in the WAF logs. The result is usually
 an overly broad policy and unnecessary friction for real users.
 
-## Before and after: use relative traffic metrics
+## Measured results: WAF effects only
 
-To avoid publishing detailed operational figures for a company service, the table below
-uses the pre-change value as an index of `100`. It separates the effect of the application
-fixes from the traffic-flow change after WAF enforcement.
+We do not publish absolute request volumes or detailed policy values for the company
+service. The table below reports only the traffic observations for the segment that
+overlapping signals classified as eligible for a WAF challenge.
+
+The values below are from the **targeted non-browser JA4 group** where overlapping
+signals justified a challenge, not from the whole service. The first row compares the
+same 30-minute snapshot; the second covers the first 24 hours after enforcement.
 
 | Metric | Before | After | Interpretation |
-| --- | ---: | ---: | --- |
-| Application-generated bad requests | 100 | Less than 10 | Removing malformed URLs and unready-config requests cut them by more than 90% |
-| Requests reaching origin | 100 | About 65 | Fewer unnecessary requests plus edge enforcement reduced origin load |
-| Suspicious automation reaching content | Many requests reached content routes | Most requests were challenged first | Automation was separated before a content response |
-| JavaScript Challenge outcome | Not measured | `Passed` and `Valid` remained low relative to `Issued` | Supports the conclusion that the targeted traffic was automated |
-| Legitimate-user 4xx rate | Baseline | No meaningful increase | Checks that the policy does not add excessive user friction |
+| --- | --- | --- | --- |
+| 30-minute traffic for the targeted group | 6,633 total / 4,088 content-reaching `200` responses | 2,117 total / 0 content-reaching `200` responses / 2,117 403-or-challenge responses | All requests moved to challenge before a content response |
+| JavaScript Challenge outcome (first 24 hours) | Challenge not applied | 7,408 issued / 0 passed | Supports the conclusion that the target was automated |
+| 4xx rate for legitimate-user cohorts | Baseline | No meaningful increase | Monitors false positives and user friction |
 
-The point of this table is not that the number of blocked requests increased. The useful
-question is whether bad requests fell first, suspicious traffic moved from content to a
-challenge, and legitimate-user metrics remained stable at the same time.
+These are not results for all bot traffic or the whole service. The useful question is
+whether the targeted automation stopped reaching content and legitimate-user metrics
+remained stable at the same time.
+
+## JA4 separated the page-loading source of GA pollution
+
+GA and Azure WAF do not measure the same traffic. GA sees events sent by tags that run in
+the browser, while Azure WAF sees edge traffic before a request reaches a page or origin.
+That means “GA has traffic that Azure does not” should not automatically be read as a WAF
+failure.
+
+In this case, we isolated Front Door requests that received a content `200`, then analyzed
+them together by JA4, user agent, geographic distribution, and requests per IP. A single
+JA4 appearing across many user agents and regions while making unusually few requests per
+IP was a strong signal of residential-proxy automation rotating both UA and IP.
+
+That analysis led to the WAF rule. After JS Challenge was applied to the targeted JA4 group,
+content-reaching `200` responses fell to zero. The bots could no longer receive page HTML,
+so they also lost the path that would execute a GA tag. In other words, WAF addressed the
+**page-loading bot traffic that was polluting GA**.
+
+GA events with no corresponding Azure edge traffic remain outside WAF's scope. Measurement
+Protocol ghost spam, events from another hostname, and analytics-processing delay require
+separate handling. For those cases, use GA hostname and engagement-based segmentation while
+keeping Front Door logs as the source of truth for server-side traffic.
 
 The first WAF task was therefore not creating a rule. It was correlating the following
 signals over the same time windows:
@@ -144,12 +168,17 @@ examined in logs first. Some categories can include legitimate crawlers or frame
 traffic, so they remained in observation mode. Only segments that also overlapped with
 non-browser fingerprints were moved to challenge enforcement.
 
-## JA4 is precise, but not a standalone rule
+## ClientHello and JA4 are supporting signals
 
-JA4 captures characteristics of a TLS ClientHello and can help distinguish client behavior.
+`ClientHello` is the first TLS negotiation message a client sends when it starts an HTTPS
+connection. It advertises supported TLS versions, cipher suites, extensions, and ALPN;
+the server uses that information to select a compatible connection. JA4 normalizes these
+TLS characteristics into a fingerprint of client behavior.
+
 User agents are easy to imitate; reproducing the behavior of an entire TLS stack is a
-higher bar. That makes the fingerprint a useful additional axis when looking at distributed
-proxies and automation.
+higher bar. That makes JA4 a useful additional axis when looking at distributed proxies
+and automation. It is not a person or device identifier, and ordinary browsers can share
+the same fingerprint.
 
 It is not a perfect human-versus-bot label, though. A broad fingerprint can be shared by
 ordinary browsers. We used four guardrails:
