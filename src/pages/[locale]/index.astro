@@ -16,7 +16,7 @@ const posts = (await getCollection("blog", (entry) => entry.id.startsWith(`${loc
 ---
 
 <BaseLayout title={t(locale, "site.title")} description={t(locale, "site.tagline")}>
-  <div class="mx-auto max-w-3xl px-6 pb-24 sm:px-10">
+  <div class="mx-auto flex max-w-3xl flex-col gap-4 px-6 pb-24 pt-10 sm:px-10">
     {
       posts.length === 0 ? (
         <p class="py-16 text-center text-[var(--color-ink-muted)]">{t(locale, "post.empty")}</p>
