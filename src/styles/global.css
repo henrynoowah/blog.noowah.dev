@@ -4,8 +4,10 @@
 
 @theme {
   /* Jost is a Futura/Universal descendant — the Bauhaus geometric sans lineage.
-     Hangul falls through to Black Han Sans (display) / Noto Sans KR (body). */
-  --font-display: "Jost", "Black Han Sans", sans-serif;
+     Hangul falls through to Gothic A1 (display) / Noto Sans KR (body). Gothic A1
+     over Black Han Sans: the latter ships one ultra-heavy weight and ignores
+     font-weight, so Korean headings could never be tuned lighter. */
+  --font-display: "Jost", "Gothic A1", sans-serif;
   --font-body: "Jost", "Noto Sans KR", sans-serif;
   --font-mono: "IBM Plex Mono", "Noto Sans Mono KR", monospace;
 }
@@ -21,13 +23,13 @@
   --color-rule: #211f1b;
   --color-rule-soft: rgba(33, 31, 27, 0.16);
 
-  --color-orange: #a85028;
+  --color-orange: #a94a1e;
   --color-olive: #5f6b39;
   --color-ochre: #c79a3a;
   --color-blue: #4f6d8c;
 
   /* text-capable accent — ochre is only ever a fill, never type on paper */
-  --color-accent: #a85028;
+  --color-accent: #a94a1e;
   --color-accent-ink: #efe9dc;
 
   --grain-opacity: 0.055;
@@ -43,12 +45,12 @@
     --color-rule: #efe9dc;
     --color-rule-soft: rgba(239, 233, 220, 0.2);
 
-    --color-orange: #d97b4a;
+    --color-orange: #e07640;
     --color-olive: #9aa867;
     --color-ochre: #dcb457;
     --color-blue: #7fa0c0;
 
-    --color-accent: #d97b4a;
+    --color-accent: #e07640;
     --color-accent-ink: #171613;
 
     --grain-opacity: 0.07;
@@ -64,12 +66,12 @@
   --color-rule: #efe9dc;
   --color-rule-soft: rgba(239, 233, 220, 0.2);
 
-  --color-orange: #d97b4a;
+  --color-orange: #e07640;
   --color-olive: #9aa867;
   --color-ochre: #dcb457;
   --color-blue: #7fa0c0;
 
-  --color-accent: #d97b4a;
+  --color-accent: #e07640;
   --color-accent-ink: #171613;
 
   --grain-opacity: 0.07;
@@ -126,6 +128,15 @@ body::after {
 /* Bayer's universal alphabet: the Bauhaus set type without capitals. */
 .lowercase-bauhaus {
   text-transform: lowercase;
+}
+
+/* Latin can take very tight leading; Hangul in Gothic A1 has a much taller
+   vertical extent and collides at the same value, so loosen it per-language. */
+.hero-title {
+  line-height: 0.88;
+}
+:lang(ko) .hero-title {
+  line-height: 1.12;
 }
 
 /* -- geometric primitives: the square/circle/triangle vocabulary -- */

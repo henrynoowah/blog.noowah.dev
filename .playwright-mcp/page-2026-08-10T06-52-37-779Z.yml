@@ -1,0 +1,81 @@
+- generic [active] [ref=f51e1]:
+  - banner [ref=f51e2]:
+    - generic [ref=f51e3]:
+      - link "noowah notes, in writing" [ref=f51e4] [cursor=pointer]:
+        - /url: /en/
+        - generic [ref=f51e5]: noowah
+        - generic [ref=f51e7]: notes, in writing
+      - generic [ref=f51e8]:
+        - link "Dev" [ref=f51e9] [cursor=pointer]:
+          - /url: /en/dev/
+        - link "Hobbies" [ref=f51e11] [cursor=pointer]:
+          - /url: /en/hobbies/
+        - generic [ref=f51e13]:
+          - navigation "Switch language" [ref=f51e14]:
+            - generic [ref=f51e15]: en
+            - link "ko" [ref=f51e16] [cursor=pointer]:
+              - /url: /ko/
+          - button "Toggle theme" [ref=f51e18]
+  - main [ref=f51e22]:
+    - generic [ref=f51e24]:
+      - heading "Frontend developer in Seoul, writing it down." [level=1] [ref=f51e25]:
+        - generic [ref=f51e26]: Frontend developer
+        - generic [ref=f51e27]: in Seoul,
+        - generic [ref=f51e28]: writing it down.
+      - paragraph [ref=f51e29]: "Two notebooks: what I build at work, and what I take apart after. Both in English and Korean."
+    - generic [ref=f51e31]:
+      - generic [ref=f51e32]: The areas
+      - generic [ref=f51e35]:
+        - link "01 Dev Engineering notes from the workshop — what I am building, and what broke on the way. AI agents and LLM tooling Infrastructure, deeper Design engineering 1 post" [ref=f51e36] [cursor=pointer]:
+          - /url: /en/dev/
+          - generic [ref=f51e37]:
+            - generic [ref=f51e38]: "01"
+            - generic [ref=f51e40]:
+              - heading "Dev" [level=2] [ref=f51e41]
+              - paragraph [ref=f51e42]: Engineering notes from the workshop — what I am building, and what broke on the way.
+              - list [ref=f51e43]:
+                - listitem [ref=f51e44]: AI agents and LLM tooling
+                - listitem [ref=f51e45]: Infrastructure, deeper
+                - listitem [ref=f51e46]: Design engineering
+            - generic [ref=f51e47]: 1 post
+        - link "02 Hobbies Off the clock. The things I take apart when nothing is on fire. Watches and watchmaking Music 1 post" [ref=f51e51] [cursor=pointer]:
+          - /url: /en/hobbies/
+          - generic [ref=f51e52]:
+            - generic [ref=f51e53]: "02"
+            - generic [ref=f51e55]:
+              - heading "Hobbies" [level=2] [ref=f51e56]
+              - paragraph [ref=f51e57]: Off the clock. The things I take apart when nothing is on fire.
+              - list [ref=f51e58]:
+                - listitem [ref=f51e59]: Watches and watchmaking
+                - listitem [ref=f51e60]: Music
+            - generic [ref=f51e61]: 1 post
+    - generic [ref=f51e66]:
+      - generic [ref=f51e67]: Latest
+      - generic [ref=f51e70]:
+        - link [ref=f51e71] [cursor=pointer]:
+          - /url: /en/dev/hello-world
+          - generic [ref=f51e72]: Dev
+          - heading "Hello, World" [level=3] [ref=f51e74]
+          - time [ref=f51e75]: Aug 10, 2026
+        - link [ref=f51e76] [cursor=pointer]:
+          - /url: /en/hobbies/why-watches
+          - generic [ref=f51e77]: Hobbies
+          - heading "Why Watches" [level=3] [ref=f51e79]
+          - time [ref=f51e80]: Aug 9, 2026
+    - generic [ref=f51e82]:
+      - generic [ref=f51e83]: Elsewhere
+      - paragraph [ref=f51e87]: Frontend developer and team lead, building healthcare software.
+      - generic [ref=f51e92]:
+        - link "Portfolio" [ref=f51e93] [cursor=pointer]:
+          - /url: https://noowah.dev
+        - link "GitHub" [ref=f51e96] [cursor=pointer]:
+          - /url: https://github.com/henrynoowah
+  - contentinfo [ref=f51e99]:
+    - generic [ref=f51e100]:
+      - generic [ref=f51e101]: © 2026 noowah
+      - generic [ref=f51e105]: Written by hand in Seoul.
+  - generic [ref=f51e108]:
+    - button [ref=f51e109]
+    - button [ref=f51e115]
+    - button [ref=f51e119]
+    - button [ref=f51e124]

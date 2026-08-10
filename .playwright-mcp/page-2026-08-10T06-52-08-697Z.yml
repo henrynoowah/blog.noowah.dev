@@ -1,0 +1,81 @@
+- generic [active] [ref=f50e1]:
+  - banner [ref=f50e2]:
+    - generic [ref=f50e3]:
+      - link "noowah 글로 남기는 생각들" [ref=f50e4] [cursor=pointer]:
+        - /url: /ko/
+        - generic [ref=f50e5]: noowah
+        - generic [ref=f50e7]: 글로 남기는 생각들
+      - generic [ref=f50e8]:
+        - link "개발" [ref=f50e9] [cursor=pointer]:
+          - /url: /ko/dev/
+        - link "취미" [ref=f50e11] [cursor=pointer]:
+          - /url: /ko/hobbies/
+        - generic [ref=f50e13]:
+          - navigation "언어 전환" [ref=f50e14]:
+            - link "en" [ref=f50e15] [cursor=pointer]:
+              - /url: /en/
+            - generic [ref=f50e16]: ko
+          - button "테마 전환" [ref=f50e18]
+  - main [ref=f50e22]:
+    - generic [ref=f50e24]:
+      - heading "서울의 프론트엔드 개발자, 기록합니다." [level=1] [ref=f50e25]:
+        - generic [ref=f50e26]: 서울의
+        - generic [ref=f50e27]: 프론트엔드 개발자,
+        - generic [ref=f50e28]: 기록합니다.
+      - paragraph [ref=f50e29]: "두 개의 노트: 일하며 만드는 것, 그리고 퇴근 후 분해하는 것. 영어와 한국어로 씁니다."
+    - generic [ref=f50e31]:
+      - generic [ref=f50e32]: 영역
+      - generic [ref=f50e35]:
+        - link "01 개발 작업실에서 남기는 엔지니어링 기록 — 무엇을 만들고 있는지, 그리고 무엇이 망가졌는지. AI 에이전트와 LLM 도구 인프라, 더 깊이 디자인 엔지니어링 1 개의 글" [ref=f50e36] [cursor=pointer]:
+          - /url: /ko/dev/
+          - generic [ref=f50e37]:
+            - generic [ref=f50e38]: "01"
+            - generic [ref=f50e40]:
+              - heading "개발" [level=2] [ref=f50e41]
+              - paragraph [ref=f50e42]: 작업실에서 남기는 엔지니어링 기록 — 무엇을 만들고 있는지, 그리고 무엇이 망가졌는지.
+              - list [ref=f50e43]:
+                - listitem [ref=f50e44]: AI 에이전트와 LLM 도구
+                - listitem [ref=f50e45]: 인프라, 더 깊이
+                - listitem [ref=f50e46]: 디자인 엔지니어링
+            - generic [ref=f50e47]: 1 개의 글
+        - link "02 취미 퇴근 후. 불이 나지 않은 날에 분해해 보는 것들. 시계와 시계 제작 음악 1 개의 글" [ref=f50e51] [cursor=pointer]:
+          - /url: /ko/hobbies/
+          - generic [ref=f50e52]:
+            - generic [ref=f50e53]: "02"
+            - generic [ref=f50e55]:
+              - heading "취미" [level=2] [ref=f50e56]
+              - paragraph [ref=f50e57]: 퇴근 후. 불이 나지 않은 날에 분해해 보는 것들.
+              - list [ref=f50e58]:
+                - listitem [ref=f50e59]: 시계와 시계 제작
+                - listitem [ref=f50e60]: 음악
+            - generic [ref=f50e61]: 1 개의 글
+    - generic [ref=f50e66]:
+      - generic [ref=f50e67]: 최신 글
+      - generic [ref=f50e70]:
+        - link [ref=f50e71] [cursor=pointer]:
+          - /url: /ko/dev/hello-world
+          - generic [ref=f50e72]: 개발
+          - heading "안녕하세요" [level=3] [ref=f50e74]
+          - time [ref=f50e75]: 2026. 8. 10.
+        - link [ref=f50e76] [cursor=pointer]:
+          - /url: /ko/hobbies/why-watches
+          - generic [ref=f50e77]: 취미
+          - heading "시계에 대하여" [level=3] [ref=f50e79]
+          - time [ref=f50e80]: 2026. 8. 9.
+    - generic [ref=f50e82]:
+      - generic [ref=f50e83]: 다른 곳에서
+      - paragraph [ref=f50e87]: 헬스케어 소프트웨어를 만드는 프론트엔드 개발자이자 팀 리드입니다.
+      - generic [ref=f50e92]:
+        - link "포트폴리오" [ref=f50e93] [cursor=pointer]:
+          - /url: https://noowah.dev
+        - link "깃허브" [ref=f50e96] [cursor=pointer]:
+          - /url: https://github.com/henrynoowah
+  - contentinfo [ref=f50e99]:
+    - generic [ref=f50e100]:
+      - generic [ref=f50e101]: © 2026 noowah
+      - generic [ref=f50e105]: 서울에서 직접 씁니다.
+  - generic [ref=f50e108]:
+    - button [ref=f50e109]
+    - button [ref=f50e115]
+    - button [ref=f50e119]
+    - button [ref=f50e124]
