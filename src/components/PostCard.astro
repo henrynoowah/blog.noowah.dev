@@ -9,9 +9,10 @@ interface Props {
   index: number;
   locale: Locale;
   areaLabel?: string;
+  accent?: string;
 }
 
-const { post, href, index, locale, areaLabel } = Astro.props;
+const { post, href, index, locale, areaLabel, accent } = Astro.props;
 const { title, description, pubDate, tags } = post.data;
 const dateLabel = new Intl.DateTimeFormat(locale, { dateStyle: "long" }).format(pubDate);
 const num = String(index + 1).padStart(2, "0");
@@ -20,10 +21,11 @@ const num = String(index + 1).padStart(2, "0");
 <article class="group relative">
   <a
     href={href}
-    class="post-card reveal grid gap-x-6 gap-y-2 rounded-2xl border border-[var(--color-rule)] p-6 transition-colors sm:grid-cols-[3.5rem_1fr] sm:p-8"
+    style={accent ? `--card-accent: ${accent}` : undefined}
+    class="post-card reveal grid gap-x-6 gap-y-2 border-2 border-[var(--color-rule)] p-6 transition-colors sm:grid-cols-[3.5rem_1fr] sm:p-8"
   >
     <span
-      class="font-mono text-xs text-[var(--color-ink-muted)] transition-colors group-hover:text-[var(--color-accent)] sm:pt-1"
+      class="font-mono text-xs text-[var(--color-ink-muted)] transition-colors group-hover:text-[var(--card-accent,var(--color-accent))] sm:pt-1"
     >
       {num}
     </span>
@@ -37,28 +39,28 @@ const num = String(index + 1).padStart(2, "0");
         </time>
         {areaLabel && (
           <span
-            class="rounded-full border border-[var(--color-rule)] px-2.5 py-0.5 font-mono text-[0.6rem] uppercase tracking-widest text-[var(--color-ink-muted)]"
+            class="border-2 border-[var(--color-rule)] px-2 py-0.5 font-mono text-[0.6rem] uppercase tracking-widest text-[var(--color-ink-muted)]"
           >
             {areaLabel}
           </span>
         )}
       </div>
       <h2
-        class="mt-1 font-display text-2xl font-semibold leading-snug text-[var(--color-ink)] transition-colors group-hover:text-[var(--color-accent)] sm:text-3xl"
+        class="mt-2 font-display text-2xl font-bold leading-tight text-[var(--color-ink)] transition-colors group-hover:text-[var(--card-accent,var(--color-accent))] break-keep sm:text-3xl"
       >
         {title}
       </h2>
-      <p class="mt-2 max-w-xl text-[var(--color-ink-muted)]">{description}</p>
-      <div class="mt-4 flex flex-wrap items-center gap-2">
+      <p class="mt-2 max-w-xl text-[var(--color-ink-muted)] break-keep">{description}</p>
+      <div class="mt-5 flex flex-wrap items-center gap-2">
         {tags.map((tag) => (
           <span
-            class="rounded-full border border-[var(--color-rule)] px-2.5 py-0.5 font-mono text-[0.65rem] uppercase tracking-widest text-[var(--color-ink-muted)]"
+            class="border-2 border-[var(--color-rule)] px-2 py-0.5 font-mono text-[0.65rem] uppercase tracking-widest text-[var(--color-ink-muted)]"
           >
             {tag}
           </span>
         ))}
         <span
-          class="ml-auto font-mono text-[0.7rem] uppercase tracking-widest text-[var(--color-accent)] opacity-0 transition-opacity group-hover:opacity-100"
+          class="ml-auto font-mono text-[0.7rem] uppercase tracking-widest text-[var(--card-accent,var(--color-accent))] opacity-0 transition-opacity group-hover:opacity-100"
         >
           {t(locale, "post.readMore")} →
         </span>

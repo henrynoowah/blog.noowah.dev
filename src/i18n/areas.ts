@@ -24,6 +24,16 @@ export function areaTopics(locale: Locale, area: Area): string[] {
   ].filter(Boolean);
 }
 
+/** Each area owns one Bauhaus primary. Yellow stays reserved for shapes/fills. */
+export function areaColor(area: Area): string {
+  return area === "dev" ? "var(--color-blue)" : "var(--color-red)";
+}
+
+/** …and one geometric primitive, its mark throughout the site. */
+export function areaShape(area: Area): "square" | "circle" {
+  return area === "dev" ? "square" : "circle";
+}
+
 export function areaHref(locale: Locale, area: Area): string {
   return `/${locale}/${area}/`;
 }

@@ -2,7 +2,7 @@
 import LanguageSwitcher from "./LanguageSwitcher.astro";
 import ThemeToggle from "./ThemeToggle.astro";
 import { t, type Locale } from "../i18n/ui";
-import { areas, areaLabel, areaHref } from "../i18n/areas";
+import { areas, areaLabel, areaHref, areaColor, areaShape } from "../i18n/areas";
 
 interface Props {
   locale: Locale;
@@ -11,13 +11,14 @@ interface Props {
 const { locale } = Astro.props;
 ---
 
-<header class="site-header px-6 pt-10 sm:px-10 sm:pt-14">
-  <div class="mx-auto flex max-w-5xl flex-wrap items-start justify-between gap-6">
+<header class="px-6 pt-8 sm:px-10 sm:pt-10">
+  <div class="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-6">
     <a href={`/${locale}/`} class="group inline-block">
       <span
-        class="block font-display text-4xl font-semibold tracking-tight text-[var(--color-ink)] sm:text-5xl"
+        class="lowercase-bauhaus flex items-center gap-2 font-display text-4xl font-black tracking-tight text-[var(--color-ink)] sm:text-5xl"
       >
-        {t(locale, "site.title")}<span class="text-[var(--color-accent)]">.</span>
+        {t(locale, "site.title")}
+        <span class="shape-circle inline-block h-3 w-3 bg-[var(--color-red)] sm:h-4 sm:w-4"></span>
       </span>
       <span
         class="mt-1 block font-mono text-[0.7rem] uppercase tracking-[0.2em] text-[var(--color-ink-muted)]"
@@ -26,25 +27,27 @@ const { locale } = Astro.props;
       </span>
     </a>
 
-    <div class="flex items-center gap-3 pt-2">
+    <div class="flex items-center gap-5">
       {
         areas.map((area) => (
           <a
             href={areaHref(locale, area)}
-            class="font-mono text-xs uppercase tracking-widest text-[var(--color-ink-muted)] transition-colors hover:text-[var(--color-ink)]"
+            class="group flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-[var(--color-ink)] transition-colors hover:text-[var(--color-ink-muted)]"
           >
+            <span
+              class={`h-2.5 w-2.5 ${areaShape(area) === "circle" ? "shape-circle" : ""}`}
+              style={`background: ${areaColor(area)}`}
+            />
             {areaLabel(locale, area)}
           </a>
         ))
       }
-      <div
-        class="flex items-center gap-3 rounded-full border border-[var(--color-rule)] px-3 py-1.5"
-      >
+      <div class="flex items-center border-2 border-[var(--color-rule)]">
         <LanguageSwitcher locale={locale} />
-        <span class="h-4 w-px bg-[var(--color-rule)]"></span>
+        <span class="h-8 w-0.5 self-stretch bg-[var(--color-rule)]"></span>
         <ThemeToggle locale={locale} />
       </div>
     </div>
   </div>
-  <div class="mx-auto mt-8 max-w-5xl border-t border-[var(--color-rule)]"></div>
+  <div class="mx-auto mt-8 max-w-5xl border-t-2 border-[var(--color-rule)]"></div>
 </header>

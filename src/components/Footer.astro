@@ -11,9 +11,14 @@ const year = new Date().getFullYear();
 
 <footer class="px-6 py-10 sm:px-10">
   <div
-    class="mx-auto flex max-w-5xl flex-col gap-1 border-t border-[var(--color-rule)] pt-6 font-mono text-[0.7rem] uppercase tracking-widest text-[var(--color-ink-muted)] sm:flex-row sm:items-center sm:justify-between"
+    class="mx-auto flex max-w-5xl flex-col gap-1 border-t-2 border-[var(--color-rule)] pt-6 font-mono text-[0.7rem] uppercase tracking-widest text-[var(--color-ink-muted)] sm:flex-row sm:items-center sm:justify-between"
   >
-    <span>© {year} noowah</span>
+    <span class="flex items-center gap-2">
+      <span class="h-2.5 w-2.5 bg-[var(--color-red)]"></span>
+      <span class="shape-circle h-2.5 w-2.5 bg-[var(--color-yellow)]"></span>
+      <span class="h-2.5 w-2.5 bg-[var(--color-blue)]"></span>
+      © {year} noowah
+    </span>
     <span>{t(locale, "footer.rights")}</span>
   </div>
 </footer>

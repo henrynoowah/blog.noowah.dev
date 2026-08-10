@@ -15,20 +15,19 @@ function pathFor(target: Locale): string {
 }
 ---
 
-<nav aria-label={label} class="flex items-center gap-1 font-mono text-xs uppercase tracking-widest">
-  {Object.entries(languages).map(([code, name], i) => (
-    <>
-      {i > 0 && <span class="text-[var(--color-ink-muted)]">·</span>}
-      {code === locale ? (
-        <span class="text-[var(--color-accent)]">{code}</span>
+<nav aria-label={label} class="flex items-stretch font-mono text-xs uppercase tracking-widest">
+  {
+    Object.keys(languages).map((code) =>
+      code === locale ? (
+        <span class="bg-[var(--color-ink)] px-2.5 py-2 text-[var(--color-paper)]">{code}</span>
       ) : (
         <a
           href={pathFor(code as Locale)}
-          class="text-[var(--color-ink-muted)] transition-colors hover:text-[var(--color-ink)]"
+          class="px-2.5 py-2 text-[var(--color-ink-muted)] transition-colors hover:bg-[var(--color-yellow)] hover:text-[#141414]"
         >
           {code}
         </a>
-      )}
-    </>
-  ))}
+      )
+    )
+  }
 </nav>

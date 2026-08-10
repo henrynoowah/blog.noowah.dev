@@ -2,7 +2,14 @@
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import PostCard from "../../../components/PostCard.astro";
 import { languages, t, type Locale } from "../../../i18n/ui";
-import { areas, areaLabel, areaDescription, type Area } from "../../../i18n/areas";
+import {
+  areas,
+  areaLabel,
+  areaDescription,
+  areaColor,
+  areaShape,
+  type Area,
+} from "../../../i18n/areas";
 import { getAreaPosts, slugOf } from "../../../lib/posts";
 
 export async function getStaticPaths() {
@@ -24,16 +31,21 @@ const description = areaDescription(locale, area);
 
 <BaseLayout title={label} description={description}>
   <div class="mx-auto max-w-5xl px-6 pb-24 pt-6 sm:px-10">
-    <header class="border-b border-[var(--color-rule)] pb-8">
+    <header class="border-b-2 border-[var(--color-rule)] pb-8">
+      <span
+        class={`mb-5 block h-8 w-8 ${areaShape(area) === "circle" ? "shape-circle" : ""}`}
+        style={`background: ${areaColor(area)}`}
+        aria-hidden="true"></span>
       <h1
-        class="font-display text-4xl font-bold tracking-tight text-[var(--color-ink)] sm:text-5xl"
+        class="lowercase-bauhaus font-display text-5xl font-black leading-none tracking-tight sm:text-7xl"
+        style={`color: ${areaColor(area)}`}
       >
         {label}
       </h1>
-      <p class="mt-3 max-w-xl text-[var(--color-ink-muted)]">{description}</p>
+      <p class="mt-4 max-w-xl text-[var(--color-ink-muted)] break-keep">{description}</p>
     </header>
 
-    <div class="mt-4 flex flex-col gap-4">
+    <div class="mt-8 flex flex-col gap-5">
       {
         posts.length === 0 ? (
           <p class="py-16 text-center text-[var(--color-ink-muted)]">{t(locale, "post.empty")}</p>
@@ -43,6 +55,7 @@ const description = areaDescription(locale, area);
               post={post}
               index={index}
               locale={locale}
+              accent={areaColor(area)}
               href={`/${locale}/${area}/${slugOf(post, locale)}`}
             />
           ))
