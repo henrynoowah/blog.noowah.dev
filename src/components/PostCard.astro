@@ -22,7 +22,7 @@ const num = String(index + 1).padStart(2, "0");
   <a
     href={href}
     style={accent ? `--card-accent: ${accent}` : undefined}
-    class="post-card reveal grid gap-x-6 gap-y-2 border-2 border-[var(--color-rule)] p-6 transition-colors sm:grid-cols-[3.5rem_1fr] sm:p-8"
+    class="post-card reveal grid gap-x-6 gap-y-2 border border-[var(--color-rule)] p-6 transition-colors sm:grid-cols-[3.5rem_1fr] sm:p-8"
   >
     <span
       class="font-mono text-xs text-[var(--color-ink-muted)] transition-colors group-hover:text-[var(--card-accent,var(--color-accent))] sm:pt-1"
@@ -39,7 +39,7 @@ const num = String(index + 1).padStart(2, "0");
         </time>
         {areaLabel && (
           <span
-            class="border-2 border-[var(--color-rule)] px-2 py-0.5 font-mono text-[0.6rem] uppercase tracking-widest text-[var(--color-ink-muted)]"
+            class="border border-[var(--color-rule)] px-2 py-0.5 font-mono text-[0.6rem] uppercase tracking-widest text-[var(--color-ink-muted)]"
           >
             {areaLabel}
           </span>
@@ -54,7 +54,7 @@ const num = String(index + 1).padStart(2, "0");
       <div class="mt-5 flex flex-wrap items-center gap-2">
         {tags.map((tag) => (
           <span
-            class="border-2 border-[var(--color-rule)] px-2 py-0.5 font-mono text-[0.65rem] uppercase tracking-widest text-[var(--color-ink-muted)]"
+            class="border border-[var(--color-rule)] px-2 py-0.5 font-mono text-[0.65rem] uppercase tracking-widest text-[var(--color-ink-muted)]"
           >
             {tag}
           </span>

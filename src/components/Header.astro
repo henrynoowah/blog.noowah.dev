@@ -18,7 +18,7 @@ const { locale } = Astro.props;
         class="lowercase-bauhaus flex items-center gap-2 font-display text-4xl font-black tracking-tight text-[var(--color-ink)] sm:text-5xl"
       >
         {t(locale, "site.title")}
-        <span class="shape-circle inline-block h-3 w-3 bg-[var(--color-red)] sm:h-4 sm:w-4"></span>
+        <span class="shape-circle inline-block h-3 w-3 bg-[var(--color-orange)] sm:h-4 sm:w-4"></span>
       </span>
       <span
         class="mt-1 block font-mono text-[0.7rem] uppercase tracking-[0.2em] text-[var(--color-ink-muted)]"
@@ -42,12 +42,12 @@ const { locale } = Astro.props;
           </a>
         ))
       }
-      <div class="flex items-center border-2 border-[var(--color-rule)]">
+      <div class="flex items-center border border-[var(--color-rule)]">
         <LanguageSwitcher locale={locale} />
-        <span class="h-8 w-0.5 self-stretch bg-[var(--color-rule)]"></span>
+        <span class="h-8 w-px self-stretch bg-[var(--color-rule)]"></span>
         <ThemeToggle locale={locale} />
       </div>
     </div>
   </div>
-  <div class="mx-auto mt-8 max-w-5xl border-t-2 border-[var(--color-rule)]"></div>
+  <div class="mx-auto mt-8 max-w-5xl border-t border-[var(--color-rule)]"></div>
 </header>

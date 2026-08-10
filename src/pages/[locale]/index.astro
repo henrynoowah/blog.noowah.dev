@@ -37,12 +37,12 @@ const countLabel = (n: number) =>
 
 <BaseLayout title={t(locale, "site.title")} description={t(locale, "site.tagline")}>
   <!-- Hero: type set against a Bauhaus composition of primitives -->
-  <section class="relative overflow-hidden border-b-2 border-[var(--color-rule)]">
+  <section class="relative overflow-hidden border-b border-[var(--color-rule)]">
     <!-- desktop composition: kept entirely in the right band so type never
          lands on a shape that would hurt contrast -->
     <div class="pointer-events-none absolute inset-0 hidden lg:block" aria-hidden="true">
       <div
-        class="shape-rise shape-circle absolute right-[4%] top-[-4rem] h-80 w-80 bg-[var(--color-yellow)]"
+        class="shape-rise shape-circle absolute right-[4%] top-[-4rem] h-80 w-80 bg-[var(--color-ochre)]"
         style="animation-delay: 120ms"
       >
       </div>
@@ -52,7 +52,7 @@ const countLabel = (n: number) =>
       >
       </div>
       <div
-        class="shape-rise shape-triangle absolute bottom-10 right-[10%] h-28 w-28 bg-[var(--color-red)]"
+        class="shape-rise shape-triangle absolute bottom-10 right-[10%] h-28 w-28 bg-[var(--color-orange)]"
         style="animation-delay: 380ms"
       >
       </div>
@@ -72,13 +72,13 @@ const countLabel = (n: number) =>
       <!-- small screens get the primitives as a banner instead of a backdrop -->
       <div class="mb-10 flex items-end gap-3 lg:hidden" aria-hidden="true">
         <span
-          class="shape-rise shape-circle h-14 w-14 bg-[var(--color-yellow)]"
+          class="shape-rise shape-circle h-14 w-14 bg-[var(--color-ochre)]"
           style="animation-delay: 100ms"></span>
         <span
           class="shape-rise shape-half-bottom h-7 w-14 bg-[var(--color-blue)]"
           style="animation-delay: 200ms"></span>
         <span
-          class="shape-rise shape-triangle h-12 w-12 bg-[var(--color-red)]"
+          class="shape-rise shape-triangle h-12 w-12 bg-[var(--color-orange)]"
           style="animation-delay: 300ms"></span>
         <span
           class="shape-rise h-6 w-6 bg-[var(--color-ink)]"
@@ -89,12 +89,12 @@ const countLabel = (n: number) =>
       >
         <span class="rise block" style="animation-delay: 60ms">{t(locale, "home.hero.line1")}</span>
         <span class="rise block" style="animation-delay: 160ms">{t(locale, "home.hero.line2")}</span>
-        <span class="rise block text-[var(--color-red)]" style="animation-delay: 260ms">
+        <span class="rise block text-[var(--color-orange)]" style="animation-delay: 260ms">
           {t(locale, "home.hero.line3")}
         </span>
       </h1>
       <p
-        class="rise mt-10 max-w-md border-l-[6px] border-[var(--color-yellow)] pl-5 text-lg leading-relaxed text-[var(--color-ink-muted)] break-keep"
+        class="rise mt-10 max-w-md border-l-2 border-[var(--color-ochre)] pl-5 text-lg leading-relaxed text-[var(--color-ink-muted)] break-keep"
         style="animation-delay: 400ms"
       >
         {t(locale, "home.hero.lede")}
@@ -106,7 +106,7 @@ const countLabel = (n: number) =>
   <section class="px-6 pb-24 pt-16 sm:px-10 sm:pb-32 sm:pt-20">
     <div class="mx-auto max-w-5xl">
       <div class="flex items-center gap-4">
-        <span class="h-4 w-4 bg-[var(--color-yellow)]"></span>
+        <span class="h-4 w-4 bg-[var(--color-ochre)]"></span>
         <span
           class="font-mono text-[0.65rem] uppercase tracking-[0.25em] text-[var(--color-ink-muted)]"
         >
@@ -114,13 +114,13 @@ const countLabel = (n: number) =>
         </span>
       </div>
 
-      <div class="mt-8 border-b-2 border-[var(--color-rule)]">
+      <div class="mt-8 border-b border-[var(--color-rule)]">
         {
           sections.map(({ area, posts }, i) => (
             <a
               href={areaHref(locale, area as Area)}
               style={`--area-color: ${areaColor(area as Area)}`}
-              class="area-row reveal group relative block overflow-hidden border-t-2 border-[var(--color-rule)] py-10 sm:py-14"
+              class="area-row reveal group relative block overflow-hidden border-t border-[var(--color-rule)] py-10 sm:py-14"
             >
               <div class="relative z-10 grid gap-5 px-4 sm:grid-cols-[3rem_1fr_auto] sm:items-start sm:gap-10 sm:px-6">
                 <div class="flex items-center gap-3 sm:block">
@@ -159,7 +159,7 @@ const countLabel = (n: number) =>
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
-                    stroke-width="2.5"
+                    stroke-width="2"
                     aria-hidden="true"
                   >
                     <path d="M4 12h15m0 0-6-6m6 6-6 6" />
@@ -179,20 +179,20 @@ const countLabel = (n: number) =>
       <section class="px-6 pb-24 sm:px-10 sm:pb-32">
         <div class="mx-auto max-w-5xl">
           <div class="flex items-center gap-4">
-            <span class="shape-circle h-4 w-4 bg-[var(--color-red)]" />
+            <span class="shape-circle h-4 w-4 bg-[var(--color-orange)]" />
             <span class="font-mono text-[0.65rem] uppercase tracking-[0.25em] text-[var(--color-ink-muted)]">
               {t(locale, "home.latest.label")}
             </span>
           </div>
 
-          <div class="mt-8 border-b-2 border-[var(--color-rule)]">
+          <div class="mt-8 border-b border-[var(--color-rule)]">
             {latest.map((post) => {
               const area = post.collection as Area;
               return (
                 <a
                   href={postHref(locale, area, slugOf(post, locale))}
                   style={`--area-color: ${areaColor(area)}`}
-                  class="group flex flex-wrap items-baseline gap-x-5 gap-y-2 border-t-2 border-[var(--color-rule)] px-4 py-5 transition-colors hover:bg-[var(--color-paper-raised)] sm:px-6"
+                  class="group flex flex-wrap items-baseline gap-x-5 gap-y-2 border-t border-[var(--color-rule)] px-4 py-5 transition-colors hover:bg-[var(--color-paper-raised)] sm:px-6"
                 >
                   <span class="flex items-center gap-2 font-mono text-[0.6rem] uppercase tracking-widest text-[var(--color-ink-muted)]">
                     <span
@@ -241,13 +241,13 @@ const countLabel = (n: number) =>
           {t(locale, "home.closing.text")}
         </p>
         <div class="flex gap-3" aria-hidden="true">
-          <span class="h-12 w-12 bg-[var(--color-red)]"></span>
-          <span class="shape-circle h-12 w-12 bg-[var(--color-yellow)]"></span>
+          <span class="h-12 w-12 bg-[var(--color-orange)]"></span>
+          <span class="shape-circle h-12 w-12 bg-[var(--color-ochre)]"></span>
           <span class="shape-half-left h-12 w-12 bg-[var(--color-blue)]"></span>
         </div>
       </div>
 
-      <div class="mt-10 flex flex-wrap gap-x-8 gap-y-3 border-t-2 border-[var(--color-rule)] pt-6">
+      <div class="mt-10 flex flex-wrap gap-x-8 gap-y-3 border-t border-[var(--color-rule)] pt-6">
         {
           [
             { href: "https://noowah.dev", label: t(locale, "home.closing.portfolio") },
@@ -255,7 +255,7 @@ const countLabel = (n: number) =>
           ].map((link) => (
             <a
               href={link.href}
-              class="group inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-[var(--color-ink)] transition-colors hover:text-[var(--color-red)]"
+              class="group inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-[var(--color-ink)] transition-colors hover:text-[var(--color-orange)]"
             >
               {link.label}
               <svg
@@ -263,7 +263,7 @@ const countLabel = (n: number) =>
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
-                stroke-width="2.5"
+                stroke-width="2"
                 aria-hidden="true"
               >
                 <path d="M7 17 17 7m0 0H8m9 0v9" />

@@ -10,56 +10,70 @@
   --font-mono: "IBM Plex Mono", "Noto Sans Mono KR", monospace;
 }
 
-/* Bauhaus palette: three primaries, black, warm paper. Nothing else. */
+/* Bauhaus structure, earth-pigment palette: terracotta, olive, ochre, slate
+   blue on bone. Muted rather than primary — closer to dyed wool and printed
+   paper than to poster ink. */
 :root {
-  --color-paper: #f1ece1;
-  --color-paper-raised: #e6ded0;
-  --color-ink: #141414;
-  --color-ink-muted: #5f594e;
-  --color-rule: #141414;
-  --color-rule-soft: rgba(20, 20, 20, 0.18);
+  --color-paper: #efe9dc;
+  --color-paper-raised: #e4dccb;
+  --color-ink: #211f1b;
+  --color-ink-muted: #6b6559;
+  --color-rule: #211f1b;
+  --color-rule-soft: rgba(33, 31, 27, 0.16);
 
-  --color-red: #e0301e;
-  --color-blue: #1b4a9c;
-  --color-yellow: #f2b705;
+  --color-orange: #a85028;
+  --color-olive: #5f6b39;
+  --color-ochre: #c79a3a;
+  --color-blue: #4f6d8c;
 
-  /* text-capable accent — yellow is never used for type on paper */
-  --color-accent: #e0301e;
-  --color-accent-ink: #f1ece1;
+  /* text-capable accent — ochre is only ever a fill, never type on paper */
+  --color-accent: #a85028;
+  --color-accent-ink: #efe9dc;
+
+  --grain-opacity: 0.055;
+  --grain-blend: multiply;
 }
 
 :root:not([data-theme="light"]) {
   @media (prefers-color-scheme: dark) {
-    --color-paper: #121212;
-    --color-paper-raised: #1c1c1c;
-    --color-ink: #f1ece1;
-    --color-ink-muted: #9a948a;
-    --color-rule: #f1ece1;
-    --color-rule-soft: rgba(241, 236, 225, 0.22);
+    --color-paper: #171613;
+    --color-paper-raised: #211f1a;
+    --color-ink: #efe9dc;
+    --color-ink-muted: #9b9484;
+    --color-rule: #efe9dc;
+    --color-rule-soft: rgba(239, 233, 220, 0.2);
 
-    --color-red: #ff4b3b;
-    --color-blue: #4a86f7;
-    --color-yellow: #ffd028;
+    --color-orange: #d97b4a;
+    --color-olive: #9aa867;
+    --color-ochre: #dcb457;
+    --color-blue: #7fa0c0;
 
-    --color-accent: #ff4b3b;
-    --color-accent-ink: #121212;
+    --color-accent: #d97b4a;
+    --color-accent-ink: #171613;
+
+    --grain-opacity: 0.07;
+    --grain-blend: overlay;
   }
 }
 
 :root[data-theme="dark"] {
-  --color-paper: #121212;
-  --color-paper-raised: #1c1c1c;
-  --color-ink: #f1ece1;
-  --color-ink-muted: #9a948a;
-  --color-rule: #f1ece1;
-  --color-rule-soft: rgba(241, 236, 225, 0.22);
+  --color-paper: #171613;
+  --color-paper-raised: #211f1a;
+  --color-ink: #efe9dc;
+  --color-ink-muted: #9b9484;
+  --color-rule: #efe9dc;
+  --color-rule-soft: rgba(239, 233, 220, 0.2);
 
-  --color-red: #ff4b3b;
-  --color-blue: #4a86f7;
-  --color-yellow: #ffd028;
+  --color-orange: #d97b4a;
+  --color-olive: #9aa867;
+  --color-ochre: #dcb457;
+  --color-blue: #7fa0c0;
 
-  --color-accent: #ff4b3b;
-  --color-accent-ink: #121212;
+  --color-accent: #d97b4a;
+  --color-accent-ink: #171613;
+
+  --grain-opacity: 0.07;
+  --grain-blend: overlay;
 }
 
 html {
@@ -75,6 +89,19 @@ body {
   color: var(--color-ink);
   font-family: var(--font-body);
   position: relative;
+}
+
+/* printed-paper grain over the whole surface — one inline feTurbulence tile,
+   no image asset. ponytail: fixed overlay is cheaper than tiling per-section. */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  pointer-events: none;
+  opacity: var(--grain-opacity);
+  mix-blend-mode: var(--grain-blend);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 *,
@@ -124,7 +151,7 @@ body {
   clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
 }
 
-/* post entries: flat block, hard corners, heavy rule — no frost, no radius */
+/* post entries: flat block, hard corners, hairline rule — no frost, no radius */
 .post-card {
   background: var(--color-paper);
 }
@@ -243,14 +270,14 @@ body {
 .prose a {
   color: var(--color-accent);
   text-decoration: underline;
-  text-decoration-thickness: 2px;
+  text-decoration-thickness: 1px;
   text-underline-offset: 3px;
 }
 .prose strong {
   font-weight: 700;
 }
 .prose blockquote {
-  border-left: 6px solid var(--color-yellow);
+  border-left: 3px solid var(--color-ochre);
   padding-left: 1.1em;
   color: var(--color-ink-muted);
 }

@@ -24,9 +24,9 @@ export function areaTopics(locale: Locale, area: Area): string[] {
   ].filter(Boolean);
 }
 
-/** Each area owns one Bauhaus primary. Yellow stays reserved for shapes/fills. */
+/** Each area owns one earth pigment. Ochre stays reserved for shapes/fills. */
 export function areaColor(area: Area): string {
-  return area === "dev" ? "var(--color-blue)" : "var(--color-red)";
+  return area === "dev" ? "var(--color-olive)" : "var(--color-orange)";
 }
 
 /** …and one geometric primitive, its mark throughout the site. */

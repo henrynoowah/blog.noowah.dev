@@ -39,7 +39,7 @@ const dateLabel = new Intl.DateTimeFormat(locale, { dateStyle: "long" }).format(
       ← {areaLabel(locale, area)}
     </a>
 
-    <header class="mt-8 max-w-2xl border-b-2 border-[var(--color-rule)] pb-8">
+    <header class="mt-8 max-w-2xl border-b border-[var(--color-rule)] pb-8">
       <time
         datetime={pubDate.toISOString()}
         class="font-mono text-[0.7rem] uppercase tracking-widest text-[var(--color-ink-muted)]"
@@ -52,14 +52,14 @@ const dateLabel = new Intl.DateTimeFormat(locale, { dateStyle: "long" }).format(
         {title}
       </h1>
       <span
-        class="mt-6 block h-1.5 w-24"
+        class="mt-6 block h-1 w-24"
         style={`background: ${areaColor(area)}`}
         aria-hidden="true"></span>
       {tags.length > 0 && (
         <div class="mt-6 flex flex-wrap gap-2">
           {tags.map((tag) => (
             <span
-              class="border-2 border-[var(--color-rule)] px-2 py-0.5 font-mono text-[0.65rem] uppercase tracking-widest text-[var(--color-ink-muted)]"
+              class="border border-[var(--color-rule)] px-2 py-0.5 font-mono text-[0.65rem] uppercase tracking-widest text-[var(--color-ink-muted)]"
             >
               {tag}
             </span>
