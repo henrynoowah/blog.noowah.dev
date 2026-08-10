@@ -1,0 +1,65 @@
+---
+import { getCollection, render } from "astro:content";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { languages, t, type Locale } from "../../../i18n/ui";
+
+export async function getStaticPaths() {
+  const paths = [];
+  for (const locale of Object.keys(languages) as Locale[]) {
+    const posts = (await getCollection("blog", (entry) => entry.id.startsWith(`${locale}/`))).filter(
+      (entry) => !entry.data.draft
+    );
+    for (const post of posts) {
+      paths.push({
+        params: { locale, slug: post.id.slice(locale.length + 1) },
+        props: { post },
+      });
+    }
+  }
+  return paths;
+}
+
+const { locale } = Astro.params as { locale: Locale };
+const { post } = Astro.props;
+const { title, description, pubDate, tags } = post.data;
+const { Content } = await render(post);
+const dateLabel = new Intl.DateTimeFormat(locale, { dateStyle: "long" }).format(pubDate);
+---
+
+<BaseLayout title={title} description={description}>
+  <article class="mx-auto max-w-2xl px-6 pb-24 pt-4 sm:px-10">
+    <a
+      href={`/${locale}/`}
+      class="inline-flex items-center gap-1 font-mono text-xs uppercase tracking-widest text-[var(--color-ink-muted)] transition-colors hover:text-[var(--color-accent)]"
+    >
+      ← {t(locale, "post.back")}
+    </a>
+
+    <header class="mt-8 border-b border-[var(--color-rule)] pb-8">
+      <time
+        datetime={pubDate.toISOString()}
+        class="font-mono text-[0.7rem] uppercase tracking-widest text-[var(--color-ink-muted)]"
+      >
+        {dateLabel}
+      </time>
+      <h1 class="mt-2 font-display text-3xl font-semibold leading-tight text-[var(--color-ink)] sm:text-4xl">
+        {title}
+      </h1>
+      {tags.length > 0 && (
+        <div class="mt-4 flex flex-wrap gap-2">
+          {tags.map((tag) => (
+            <span
+              class="rounded-full border border-[var(--color-rule)] px-2.5 py-0.5 font-mono text-[0.65rem] uppercase tracking-widest text-[var(--color-ink-muted)]"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+      )}
+    </header>
+
+    <div class="prose mt-10">
+      <Content />
+    </div>
+  </article>
+</BaseLayout>

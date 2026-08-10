@@ -1,0 +1,28 @@
+backend:
+  name: github
+  repo: henrynoowah/blog.noowah.dev
+  branch: main
+  base_url: https://blog.noowah.dev
+
+media_folder: "public/uploads"
+public_folder: "/uploads"
+
+i18n:
+  structure: multiple_folders
+  locales: [en, ko]
+  default_locale: en
+
+collections:
+  - name: "blog"
+    label: "Blog"
+    folder: "src/content/blog"
+    create: true
+    slug: "{{slug}}"
+    i18n: true
+    fields:
+      - { label: "Title", name: "title", widget: "string", i18n: true }
+      - { label: "Description", name: "description", widget: "text", i18n: true }
+      - { label: "Publish Date", name: "pubDate", widget: "datetime" }
+      - { label: "Tags", name: "tags", widget: "list", default: [] }
+      - { label: "Draft", name: "draft", widget: "boolean", default: false }
+      - { label: "Body", name: "body", widget: "markdown", i18n: true }

@@ -1,0 +1,57 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { t, type Locale } from "../i18n/ui";
+
+interface Props {
+  post: CollectionEntry<"blog">;
+  href: string;
+  index: number;
+  locale: Locale;
+}
+
+const { post, href, index, locale } = Astro.props;
+const { title, description, pubDate, tags } = post.data;
+const dateLabel = new Intl.DateTimeFormat(locale, { dateStyle: "long" }).format(pubDate);
+const num = String(index + 1).padStart(2, "0");
+---
+
+<article class="group relative">
+  <a
+    href={href}
+    class="grid gap-x-6 gap-y-2 border-t border-[var(--color-rule)] py-8 transition-colors sm:grid-cols-[3.5rem_1fr] sm:py-10"
+  >
+    <span
+      class="font-mono text-xs text-[var(--color-ink-muted)] transition-colors group-hover:text-[var(--color-accent)] sm:pt-1"
+    >
+      {num}
+    </span>
+    <div>
+      <time
+        datetime={pubDate.toISOString()}
+        class="font-mono text-[0.7rem] uppercase tracking-widest text-[var(--color-ink-muted)]"
+      >
+        {dateLabel}
+      </time>
+      <h2
+        class="mt-1 font-display text-2xl font-semibold leading-snug text-[var(--color-ink)] transition-colors group-hover:text-[var(--color-accent)] sm:text-3xl"
+      >
+        {title}
+      </h2>
+      <p class="mt-2 max-w-xl text-[var(--color-ink-muted)]">{description}</p>
+      <div class="mt-4 flex flex-wrap items-center gap-2">
+        {tags.map((tag) => (
+          <span
+            class="rounded-full border border-[var(--color-rule)] px-2.5 py-0.5 font-mono text-[0.65rem] uppercase tracking-widest text-[var(--color-ink-muted)]"
+          >
+            {tag}
+          </span>
+        ))}
+        <span
+          class="ml-auto font-mono text-[0.7rem] uppercase tracking-widest text-[var(--color-accent)] opacity-0 transition-opacity group-hover:opacity-100"
+        >
+          {t(locale, "post.readMore")} →
+        </span>
+      </div>
+    </div>
+  </a>
+</article>

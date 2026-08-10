@@ -1,0 +1,34 @@
+---
+import { languages, t, type Locale } from "../i18n/ui";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const label = t(locale, "lang.switch");
+
+function pathFor(target: Locale): string {
+  const segments = Astro.url.pathname.split("/").filter(Boolean);
+  segments[0] = target;
+  return "/" + segments.join("/") + (segments.length <= 1 ? "/" : "");
+}
+---
+
+<nav aria-label={label} class="flex items-center gap-1 font-mono text-xs uppercase tracking-widest">
+  {Object.entries(languages).map(([code, name], i) => (
+    <>
+      {i > 0 && <span class="text-[var(--color-ink-muted)]">·</span>}
+      {code === locale ? (
+        <span class="text-[var(--color-accent)]">{code}</span>
+      ) : (
+        <a
+          href={pathFor(code as Locale)}
+          class="text-[var(--color-ink-muted)] transition-colors hover:text-[var(--color-ink)]"
+        >
+          {code}
+        </a>
+      )}
+    </>
+  ))}
+</nav>

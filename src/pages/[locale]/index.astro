@@ -1,0 +1,35 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PostCard from "../../components/PostCard.astro";
+import { languages, t, type Locale } from "../../i18n/ui";
+
+export async function getStaticPaths() {
+  return Object.keys(languages).map((locale) => ({ params: { locale } }));
+}
+
+const { locale } = Astro.params as { locale: Locale };
+
+const posts = (await getCollection("blog", (entry) => entry.id.startsWith(`${locale}/`)))
+  .filter((entry) => !entry.data.draft)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<BaseLayout title={t(locale, "site.title")} description={t(locale, "site.tagline")}>
+  <div class="mx-auto max-w-3xl px-6 pb-24 sm:px-10">
+    {
+      posts.length === 0 ? (
+        <p class="py-16 text-center text-[var(--color-ink-muted)]">{t(locale, "post.empty")}</p>
+      ) : (
+        posts.map((post, index) => (
+          <PostCard
+            post={post}
+            index={index}
+            locale={locale}
+            href={`/${locale}/blog/${post.id.slice(locale.length + 1)}`}
+          />
+        ))
+      )
+    }
+  </div>
+</BaseLayout>
