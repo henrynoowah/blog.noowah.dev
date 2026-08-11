@@ -1,0 +1,13 @@
+---
+import HomePage from "../components/HomePage.astro";
+import { areas } from "../i18n/areas";
+import { getAreaPosts, getAllPosts } from "../lib/posts";
+
+const locale = "en";
+const [sections, latest] = await Promise.all([
+  Promise.all(areas.map(async (area) => ({ area, posts: await getAreaPosts(area, locale) }))),
+  getAllPosts(locale).then((posts) => posts.slice(0, 4)),
+]);
+---
+
+<HomePage locale={locale} sections={sections} latest={latest} />
