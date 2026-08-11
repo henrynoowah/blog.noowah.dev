@@ -120,7 +120,10 @@ hr {
   margin: 2.4em 0;
 }
 table {
-  width: 100%;
+  display: block;
+  width: max-content;
+  max-width: 100%;
+  overflow-x: auto;
   border-collapse: collapse;
   font-size: 0.95em;
 }

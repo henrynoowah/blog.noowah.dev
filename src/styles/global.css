@@ -329,7 +329,10 @@ body::after {
   margin: 2.4em 0;
 }
 .prose table {
-  width: 100%;
+  display: block;
+  width: max-content;
+  max-width: 100%;
+  overflow-x: auto;
   border-collapse: collapse;
   font-size: 0.95em;
 }
