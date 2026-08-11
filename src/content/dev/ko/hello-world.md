@@ -4,6 +4,7 @@ description: 이 블로그의 첫 글입니다 — 왜 시작했는지, 앞으�
 pubDate: 2026-08-10
 tags:
   - meta
+draft: true
 ---
 
 환영합니다. **blog.noowah.dev**의 첫 글이며, 마크다운으로 작성되고
