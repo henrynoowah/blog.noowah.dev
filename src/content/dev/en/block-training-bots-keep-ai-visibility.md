@@ -8,7 +8,7 @@ tags:
   - seo
   - geo
   - bot-management
-draft: true
+draft: false
 ---
 
 A colleague from a non-dev team pinged me: "I saw we block **ClaudeBot** and **GPTBot** in

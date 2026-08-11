@@ -8,7 +8,7 @@ tags:
   - seo
   - geo
   - bot-management
-draft: true
+draft: false
 ---
 
 비개발팀 동료가 물어봤다. "`robots.txt`에서 **ClaudeBot**이랑 **GPTBot**을 막았던데,
