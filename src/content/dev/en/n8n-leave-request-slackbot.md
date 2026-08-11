@@ -1,5 +1,5 @@
 ---
-title: 'One Slash Command for Leave Requests, Approvals, and Calendar Sync — An Internal Bot Built on n8n'
+title: One Slash Command for Leave Requests, Approvals, and Calendar Sync — An Internal Bot Built on n8n
 description: Remaining-balance math, dynamic modals, an approval gate, calendar auto-entry, and manager-only oversight views — an internal leave bot built with nothing but n8n and a spreadsheet, no server or database.
 pubDate: 2026-04-21
 tags:
@@ -8,7 +8,7 @@ tags:
   - automation
   - low-code
   - workflow
-draft: true
+draft: false
 ---
 
 ## The problem: approving leave is more of a chore than you'd think
@@ -27,7 +27,7 @@ Type `/leave` and a menu pops up right there. The buttons in that menu depend on
 
 This bot wasn't the only one — several other Slack-based automations were already running internally. So instead of building a separate "endpoint that receives Slack interactions (button clicks, modal submissions)" for each workflow, I routed everything through **a single central router**.
 
-```
+```plain
 Slack Interactivity Webhook (single endpoint)
         │
         ▼
