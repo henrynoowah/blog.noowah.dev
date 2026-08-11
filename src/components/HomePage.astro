@@ -1,0 +1,267 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { t, type Locale } from "../i18n/ui";
+import {
+  areaLabel,
+  areaDescription,
+  areaTopics,
+  areaHref,
+  areaColor,
+  areaShape,
+  postHref,
+  type Area,
+} from "../i18n/areas";
+import { slugOf, type Post } from "../lib/posts";
+
+interface Props {
+  locale: Locale;
+  sections: { area: Area; posts: Post[] }[];
+  latest: Post[];
+}
+
+const { locale, sections, latest } = Astro.props;
+
+const countLabel = (count: number) =>
+  `${count} ${t(locale, count === 1 ? "area.count.one" : "area.count.other")}`;
+---
+
+<BaseLayout title={t(locale, "site.title")} description={t(locale, "site.tagline")}>
+  <!-- Hero: type set against a Bauhaus composition of primitives -->
+  <section class="relative overflow-hidden border-b border-[var(--color-rule)]">
+    <!-- desktop composition: kept entirely in the right band so type never
+         lands on a shape that would hurt contrast -->
+    <div class="pointer-events-none absolute inset-0 hidden lg:block" aria-hidden="true">
+      <div
+        class="shape-rise shape-circle absolute right-[4%] top-[-4rem] h-80 w-80 bg-[var(--color-ochre)]"
+        style="animation-delay: 120ms"
+      >
+      </div>
+      <div
+        class="shape-rise shape-half-bottom absolute right-[34%] top-0 h-24 w-48 bg-[var(--color-blue)]"
+        style="animation-delay: 260ms"
+      >
+      </div>
+      <div
+        class="shape-rise shape-triangle absolute bottom-10 right-[10%] h-28 w-28 bg-[var(--color-orange)]"
+        style="animation-delay: 380ms"
+      >
+      </div>
+      <div
+        class="shape-rise absolute bottom-0 right-[30%] h-16 w-16 bg-[var(--color-ink)]"
+        style="animation-delay: 480ms"
+      >
+      </div>
+      <div
+        class="shape-rise shape-quarter-br absolute bottom-0 right-0 h-24 w-24 bg-[var(--color-blue)]"
+        style="animation-delay: 560ms"
+      >
+      </div>
+    </div>
+
+    <div class="relative z-10 mx-auto max-w-5xl px-6 pb-24 pt-14 sm:px-10 sm:pb-32 sm:pt-20">
+      <!-- small screens get the primitives as a banner instead of a backdrop -->
+      <div class="mb-10 flex items-end gap-3 lg:hidden" aria-hidden="true">
+        <span
+          class="shape-rise shape-circle h-14 w-14 bg-[var(--color-ochre)]"
+          style="animation-delay: 100ms"></span>
+        <span
+          class="shape-rise shape-half-bottom h-7 w-14 bg-[var(--color-blue)]"
+          style="animation-delay: 200ms"></span>
+        <span
+          class="shape-rise shape-triangle h-12 w-12 bg-[var(--color-orange)]"
+          style="animation-delay: 300ms"></span>
+        <span
+          class="shape-rise h-6 w-6 bg-[var(--color-ink)]"
+          style="animation-delay: 400ms"></span>
+      </div>
+      <h1
+        class="hero-title lowercase-bauhaus max-w-3xl font-display font-black tracking-tight text-[var(--color-ink)] break-keep text-[clamp(2.5rem,8.5vw,6.5rem)]"
+      >
+        <span class="rise block" style="animation-delay: 60ms">{t(locale, "home.hero.line1")}</span>
+        <span class="rise block" style="animation-delay: 160ms">{t(locale, "home.hero.line2")}</span>
+        <span class="rise block text-[var(--color-orange)]" style="animation-delay: 260ms">
+          {t(locale, "home.hero.line3")}
+        </span>
+      </h1>
+      <p
+        class="rise mt-10 max-w-md border-l-2 border-[var(--color-ochre)] pl-5 text-lg leading-relaxed text-[var(--color-ink-muted)] break-keep"
+        style="animation-delay: 400ms"
+      >
+        {t(locale, "home.hero.lede")}
+      </p>
+    </div>
+  </section>
+
+  <!-- Areas -->
+  <section class="px-6 pb-24 pt-16 sm:px-10 sm:pb-32 sm:pt-20">
+    <div class="mx-auto max-w-5xl">
+      <div class="flex items-center gap-4">
+        <span class="h-4 w-4 bg-[var(--color-ochre)]"></span>
+        <span
+          class="font-mono text-[0.65rem] uppercase tracking-[0.25em] text-[var(--color-ink-muted)]"
+        >
+          {t(locale, "home.areas.label")}
+        </span>
+      </div>
+
+      <div class="mt-8 border-b border-[var(--color-rule)]">
+        {
+          sections.map(({ area, posts }, index) => (
+            <a
+              href={areaHref(locale, area)}
+              style={`--area-color: ${areaColor(area)}`}
+              class="area-row reveal group relative block overflow-hidden border-t border-[var(--color-rule)] py-10 sm:py-14"
+            >
+              <div class="relative z-10 grid gap-5 px-4 sm:grid-cols-[3rem_1fr_auto] sm:items-start sm:gap-10 sm:px-6">
+                <div class="flex items-center gap-3 sm:block">
+                  <span class="font-mono text-sm text-[var(--color-ink-muted)] group-hover:text-[var(--color-paper)]">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <span
+                    class={`mt-4 block h-6 w-6 bg-[var(--area-color)] group-hover:bg-[var(--color-paper)] ${
+                      areaShape(area) === "circle" ? "shape-circle" : ""
+                    }`}
+                  />
+                </div>
+
+                <div>
+                  <h2 class="lowercase-bauhaus font-display text-4xl font-black leading-none tracking-tight text-[var(--color-ink)] transition-transform duration-500 ease-out group-hover:translate-x-2 group-hover:text-[var(--color-paper)] sm:text-6xl">
+                    {areaLabel(locale, area)}
+                  </h2>
+                  <p class="mt-4 max-w-md text-[var(--color-ink-muted)] break-keep group-hover:text-[var(--color-paper)]">
+                    {areaDescription(locale, area)}
+                  </p>
+                  <ul class="mt-5 flex flex-wrap gap-x-5 gap-y-1.5">
+                    {areaTopics(locale, area).map((topic) => (
+                      <li class="font-mono text-[0.7rem] uppercase tracking-widest text-[var(--color-ink-muted)] group-hover:text-[var(--color-paper)]">
+                        {topic}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div class="flex items-center gap-4 sm:flex-col sm:items-end sm:gap-6">
+                  <span class="font-mono text-[0.7rem] uppercase tracking-widest text-[var(--color-ink-muted)] group-hover:text-[var(--color-paper)]">
+                    {posts.length === 0 ? t(locale, "area.empty.short") : countLabel(posts.length)}
+                  </span>
+                  <svg
+                    class="h-6 w-6 shrink-0 text-[var(--color-ink)] transition-transform duration-500 ease-out group-hover:translate-x-2 group-hover:text-[var(--color-paper)]"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    aria-hidden="true"
+                  >
+                    <path d="M4 12h15m0 0-6-6m6 6-6 6" />
+                  </svg>
+                </div>
+              </div>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Latest -->
+  {
+    latest.length > 0 && (
+      <section class="px-6 pb-24 sm:px-10 sm:pb-32">
+        <div class="mx-auto max-w-5xl">
+          <div class="flex items-center gap-4">
+            <span class="shape-circle h-4 w-4 bg-[var(--color-orange)]" />
+            <span class="font-mono text-[0.65rem] uppercase tracking-[0.25em] text-[var(--color-ink-muted)]">
+              {t(locale, "home.latest.label")}
+            </span>
+          </div>
+
+          <div class="mt-8 border-b border-[var(--color-rule)]">
+            {latest.map((post) => {
+              const area = post.collection as Area;
+              return (
+                <a
+                  href={postHref(locale, area, slugOf(post, locale))}
+                  style={`--area-color: ${areaColor(area)}`}
+                  class="group flex flex-wrap items-baseline gap-x-5 gap-y-2 border-t border-[var(--color-rule)] px-4 py-5 transition-colors hover:bg-[var(--color-paper-raised)] sm:px-6"
+                >
+                  <span class="flex items-center gap-2 font-mono text-[0.6rem] uppercase tracking-widest text-[var(--color-ink-muted)]">
+                    <span
+                      class={`h-3 w-3 bg-[var(--area-color)] ${
+                        areaShape(area) === "circle" ? "shape-circle" : ""
+                      }`}
+                    />
+                    {areaLabel(locale, area)}
+                  </span>
+                  <h3 class="flex-1 font-display text-lg font-bold text-[var(--color-ink)] transition-colors group-hover:text-[var(--area-color)] break-keep sm:text-xl">
+                    {post.data.title}
+                  </h3>
+                  <time
+                    datetime={post.data.pubDate.toISOString()}
+                    class="font-mono text-[0.7rem] uppercase tracking-widest text-[var(--color-ink-muted)]"
+                  >
+                    {new Intl.DateTimeFormat(locale, { dateStyle: "medium" }).format(
+                      post.data.pubDate
+                    )}
+                  </time>
+                </a>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  <!-- Closing -->
+  <section class="px-6 pb-28 sm:px-10 sm:pb-36">
+    <div class="mx-auto max-w-5xl">
+      <div class="flex items-center gap-4">
+        <span class="shape-triangle h-4 w-4 bg-[var(--color-blue)]"></span>
+        <span
+          class="font-mono text-[0.65rem] uppercase tracking-[0.25em] text-[var(--color-ink-muted)]"
+        >
+          {t(locale, "home.closing.label")}
+        </span>
+      </div>
+
+      <div class="mt-8 grid gap-8 sm:grid-cols-[1fr_auto] sm:items-end">
+        <p
+          class="reveal max-w-xl font-display text-2xl font-bold leading-snug tracking-tight text-[var(--color-ink)] break-keep sm:text-3xl"
+        >
+          {t(locale, "home.closing.text")}
+        </p>
+        <div class="flex gap-3" aria-hidden="true">
+          <span class="h-12 w-12 bg-[var(--color-orange)]"></span>
+          <span class="shape-circle h-12 w-12 bg-[var(--color-ochre)]"></span>
+          <span class="shape-half-left h-12 w-12 bg-[var(--color-blue)]"></span>
+        </div>
+      </div>
+
+      <div class="mt-10 flex flex-wrap gap-x-8 gap-y-3 border-t border-[var(--color-rule)] pt-6">
+        {
+          [
+            { href: "https://noowah.dev", label: t(locale, "home.closing.portfolio") },
+            { href: "https://github.com/henrynoowah", label: t(locale, "home.closing.github") },
+          ].map((link) => (
+            <a
+              href={link.href}
+              class="group inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-[var(--color-ink)] transition-colors hover:text-[var(--color-orange)]"
+            >
+              {link.label}
+              <svg
+                class="h-3.5 w-3.5 transition-transform duration-300 ease-out group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                aria-hidden="true"
+              >
+                <path d="M7 17 17 7m0 0H8m9 0v9" />
+              </svg>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</BaseLayout>

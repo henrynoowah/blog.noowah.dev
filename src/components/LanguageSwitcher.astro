@@ -10,8 +10,13 @@ const label = t(locale, "lang.switch");
 
 function pathFor(target: Locale): string {
   const segments = Astro.url.pathname.split("/").filter(Boolean);
+
+  if (segments.length <= 1) {
+    return target === "en" ? "/" : `/${target}/`;
+  }
+
   segments[0] = target;
-  return "/" + segments.join("/") + (segments.length <= 1 ? "/" : "");
+  return "/" + segments.join("/");
 }
 ---
 
