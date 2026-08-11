@@ -1,0 +1,41 @@
+---
+import type { MarkdownHeading } from "astro";
+import { t, type Locale } from "../i18n/ui";
+
+interface Props {
+  headings: MarkdownHeading[];
+  locale: Locale;
+  class?: string;
+}
+
+const { headings, locale, class: className } = Astro.props;
+const items = headings.filter((h) => h.depth === 2 || h.depth === 3);
+---
+
+{items.length >= 2 && (
+  <nav aria-label={t(locale, "post.toc")} class={className}>
+    <p class="font-mono text-xs uppercase tracking-widest text-[var(--color-ink-muted)]">
+      {t(locale, "post.toc")}
+    </p>
+    <ul class="mt-3 space-y-1.5 text-sm">
+      {items.map((h) => (
+        <li class={h.depth === 3 ? "pl-3" : ""}>
+          <a
+            href={`#${h.slug}`}
+            data-toc-link
+            class="text-[var(--color-ink-muted)] transition-colors hover:text-[var(--color-ink)]"
+          >
+            {h.text}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+)}
+
+<style>
+  [data-toc-link][data-active] {
+    color: var(--color-accent);
+    font-weight: 700;
+  }
+</style>
