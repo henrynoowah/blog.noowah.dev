@@ -1,0 +1,121 @@
+/* Mirrors the .prose block in src/styles/global.css — keep in sync.
+   Injected into the Sveltia CMS preview iframe via CMS.registerPreviewStyle
+   in index.html, so the body preview matches the deployed article page.
+   The iframe renders the markdown body as bare elements (no .prose wrapper),
+   so selectors target the elements directly. */
+
+@import url("https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,400;0,500;0,700;0,900;1,400&family=Gothic+A1:wght@500;700;800&family=Noto+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap");
+
+/* --font-* stack from global.css @theme */
+:root {
+  --font-display: "Jost", "Gothic A1", sans-serif;
+  --font-body: "Jost", "Noto Sans KR", sans-serif;
+  --font-mono: "IBM Plex Mono", "Noto Sans Mono KR", monospace;
+
+  /* light palette — global.css :root */
+  --color-paper: #efe9dc;
+  --color-paper-raised: #e4dccb;
+  --color-ink: #211f1b;
+  --color-ink-muted: #6b6559;
+  --color-rule: #211f1b;
+
+  --color-ochre: #c79a3a;
+  --color-accent: #a94a1e;
+}
+
+/* dark palette — follows OS; preview iframe has no site theme toggle */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-paper: #171613;
+    --color-paper-raised: #211f1a;
+    --color-ink: #efe9dc;
+    --color-ink-muted: #9b9484;
+    --color-rule: #efe9dc;
+
+    --color-ochre: #dcb457;
+    --color-accent: #e07640;
+  }
+}
+
+/* -- long-form article body (mirrors .prose) -- */
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-size: 1.125rem;
+  line-height: 1.75;
+  padding: 2rem clamp(1rem, 5vw, 3rem);
+  margin: 0;
+}
+body > * + * {
+  margin-top: 1.4em;
+}
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.2;
+  margin-top: 2em;
+  margin-bottom: 0.6em;
+}
+h1 {
+  font-size: 1.85rem;
+}
+h2 {
+  font-size: 1.5rem;
+}
+h3 {
+  font-size: 1.15rem;
+}
+a {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+strong {
+  font-weight: 700;
+}
+blockquote {
+  border-left: 3px solid var(--color-ochre);
+  padding-left: 1.1em;
+  color: var(--color-ink-muted);
+  margin-left: 0;
+}
+ul,
+ol {
+  padding-left: 1.4em;
+}
+ul {
+  list-style: square;
+}
+ol {
+  list-style: decimal;
+}
+li + li {
+  margin-top: 0.4em;
+}
+code {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  background: var(--color-paper-raised);
+  padding: 0.15em 0.4em;
+}
+pre {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  background: var(--color-ink);
+  color: var(--color-paper);
+  padding: 1.1em 1.2em;
+  overflow-x: auto;
+}
+pre code {
+  background: none;
+  padding: 0;
+}
+hr {
+  border: none;
+  border-top: 2px solid var(--color-rule);
+  margin: 2.4em 0;
+}
