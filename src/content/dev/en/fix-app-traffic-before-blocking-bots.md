@@ -1,16 +1,20 @@
 ---
-title: "Blocking Distributed Bots Without Broad Blocks: An Azure WAF Operations Log"
-description: "Per-rule Bot Manager analysis, the ALPN trap in JA4 fingerprints, JavaScript Challenge, and untangling GA contamination — an Azure WAF operations log on filtering bots precisely without broad blocks."
+title: 'Blocking Distributed Bots Without Broad Blocks: An Azure WAF Operations Log'
+description: Per-rule Bot Manager analysis, the ALPN trap in JA4 fingerprints, JavaScript Challenge, and untangling GA contamination — an Azure WAF operations log on filtering bots precisely without broad blocks.
 pubDate: 2026-08-10
-tags: ["azure", "waf", "security", "bot-management"]
+tags:
+  - azure
+  - waf
+  - security
+  - bot-management
 draft: true
 ---
 
 When bot traffic grows, blocking it is the most visible response. But for a global
 medical-tourism service, broad IP or country blocks lose real patients and useful crawlers
-along with the automation. So the goal here was not to challenge everything that *looked*
-bot-like — it was to switch to a JavaScript Challenge **only where several signals
-overlapped**.
+along with the automation. So the goal here was not to challenge everything that _looked_
+bot-like — it was to switch to a JavaScript Challenge \*\*only where several signals
+overlapped\*\*.
 
 The starting point was the GeekNews case
 ["99% of our traffic was bots"](https://news.hada.io/topic?id=32244). Prompted by "isn't
@@ -51,11 +55,11 @@ what each sub-rule actually catches.
 | Bot300100 | Unspecified identity | 3,387 | Empty UA | ⚠️ Low risk |
 | Bot300300 | General-purpose HTTP clients / SDKs | 215 | curl, python-requests, Go-http-client | ⚠️ After checking internal integrations |
 
-Here came the second reversal. **The biggest-looking bucket, Bot300700 (115k), was exactly
-the one never to touch.** Its top entry was Claude-SearchBot, and next was **our own Next.js
-middleware**. Challenging it would kill AI-search visibility and break SSR. The original
+Here came the second reversal. **The biggest-looking bucket, Bot300700 (115k), was exactly**
+**the one never to touch.** Its top entry was Claude-SearchBot, and next was \*\*our own Next.js
+middleware\*\*. Challenging it would kill AI-search visibility and break SSR. The original
 premise — "all 150k UnknownBots are malicious" — flipped right here: the actual malicious
-botnet was **Bot300600 (~26k)**.
+botnet was **Bot300600 (\~26k)**.
 
 The heuristic was simple. **Requests ≈ unique IPs (1:1)** means a botnet rotating IPs;
 **many requests but very few unique IPs** means a legit crawler hitting hard from a declared
@@ -96,10 +100,10 @@ fingerprint spans hundreds of UAs and hundreds of countries, it's a single bot t
 | `t13d311100_1d947a95fc68_92851bcf5a44` | 10,566 | **645** | 116 | 1.72 | 🔴 Botnet |
 | `t13d1011h2_61a7ad8aa9b6_…` | 44 | 5 | 1 | **349** | 🟢 Legit crawler |
 
-Here was the second reversal. **Blocking the most common ringleader fingerprint `…h2` on its
-own would false-positive real users.** The `h2`/`h1` at the end of a JA4 is the negotiated
+Here was the second reversal. **Blocking the most common ringleader fingerprint `…h2` on its**
+**own would false-positive real users.** The `h2`/`h1` at the end of a JA4 is the negotiated
 ALPN, and sending ALPN is what real browsers do. That fingerprint is a plain Chrome
-fingerprint, so it overlapped with real Hong Kong users (~24 loads/IP). So I excluded it.
+fingerprint, so it overlapped with real Hong Kong users (\~24 loads/IP). So I excluded it.
 
 > **ALPN (Application-Layer Protocol Negotiation)** is a TLS extension that lets the client
 > and server agree, during the TLS handshake, on which application protocol to use (e.g.
@@ -170,10 +174,10 @@ earlier analyses exactly: per-country loads/IP ≈ 1.0 (botnet rotation), and a 
 spanning 242 UAs / 181 countries (a synthetic client).
 
 The cleanup path became clear too. GA can't see JA4, so it gets split out via an
-**engagement-based filter + GTM `navigator.webdriver` suppression**, and **no country
-blocks** — because in medical tourism the real-patient source countries overlap with the bot
-countries. And the source of truth for actual traffic is not GA but the **Front Door /
-App Insights server logs.**
+**engagement-based filter + GTM `navigator.webdriver` suppression**, and **no country**
+**blocks** — because in medical tourism the real-patient source countries overlap with the bot
+countries. And the source of truth for actual traffic is not GA but the **Front Door /**
+**App Insights server logs.**
 
 ## Principles that remain
 
