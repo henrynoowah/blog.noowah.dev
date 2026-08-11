@@ -1,8 +1,10 @@
 ---
-title: "Why Watches"
-description: "A movement is a system you can hold — and it either keeps time or it does not."
+title: Why Watches
+description: A movement is a system you can hold — and it either keeps time or it does not.
 pubDate: 2026-08-09
-tags: ["watches"]
+tags:
+  - watches
+draft: true
 ---
 
 Software hides. You can ship something that mostly works, and nobody sees the seam
