@@ -1,6 +1,7 @@
 ---
 import { render } from "astro:content";
 import BaseLayout from "../../../layouts/BaseLayout.astro";
+import Toc from "../../../components/Toc.astro";
 import { languages, type Locale } from "../../../i18n/ui";
 import { areas, areaLabel, areaColor, areaShape, type Area } from "../../../i18n/areas";
 import { getAreaPosts, slugOf } from "../../../lib/posts";
@@ -23,7 +24,7 @@ export async function getStaticPaths() {
 const { locale, area } = Astro.params as { locale: Locale; area: Area };
 const { post } = Astro.props;
 const { title, description, pubDate, tags } = post.data;
-const { Content } = await render(post);
+const { Content, headings } = await render(post);
 const dateLabel = new Intl.DateTimeFormat(locale, { dateStyle: "long" }).format(pubDate);
 ---
 
@@ -68,8 +69,49 @@ const dateLabel = new Intl.DateTimeFormat(locale, { dateStyle: "long" }).format(
       )}
     </header>
 
-    <div class="prose mt-10 max-w-2xl">
-      <Content />
+    <div class="mt-10 lg:flex lg:gap-12">
+      <div class="min-w-0 flex-1">
+        <Toc
+          headings={headings}
+          locale={locale}
+          class="mb-10 border-l-2 border-[var(--color-rule)] pl-4 lg:hidden"
+        />
+        <div class="prose max-w-2xl">
+          <Content />
+        </div>
+      </div>
+      <aside class="hidden lg:block">
+        <Toc
+          headings={headings}
+          locale={locale}
+          class="sticky top-8 max-h-[calc(100vh-4rem)] w-56 overflow-y-auto"
+        />
+      </aside>
     </div>
   </article>
+
+  <script>
+    const links = [...document.querySelectorAll("[data-toc-link]")];
+    const headings = [...document.querySelectorAll(".prose h2[id], .prose h3[id]")];
+    if (links.length && headings.length) {
+      // ponytail: IntersectionObserver scroll-spy — 표준 최소 구현. rootMargin으로 "상단 근처" 헤딩을 활성 처리.
+      const setActive = (id: string) =>
+        links.forEach((a) =>
+          a.toggleAttribute("data-active", a.getAttribute("href") === "#" + id)
+        );
+      const seen = new Set<string>();
+      const io = new IntersectionObserver(
+        (entries) => {
+          for (const e of entries) {
+            if (e.isIntersecting) seen.add(e.target.id);
+            else seen.delete(e.target.id);
+          }
+          const first = headings.find((h) => seen.has(h.id));
+          if (first) setActive(first.id);
+        },
+        { rootMargin: "0px 0px -70% 0px" }
+      );
+      headings.forEach((h) => io.observe(h));
+    }
+  </script>
 </BaseLayout>
