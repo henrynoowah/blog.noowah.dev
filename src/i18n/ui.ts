@@ -10,7 +10,7 @@ export const defaultLocale: Locale = "en";
 export const ui = {
   en: {
     "site.title": "noowah",
-    "site.tagline": "notes, in writing",
+    "site.tagline": "notes from the workbench",
     "post.readMore": "Read the piece",
     "post.back": "Back to all posts",
     "post.empty": "Nothing here yet. Check back soon.",
@@ -32,7 +32,7 @@ export const ui = {
     "area.hobbies.topic2": "Music",
     "area.hobbies.topic3": "",
 
-    "home.hero.line1": "Frontend developer",
+    "home.hero.line1": "Developer",
     "home.hero.line2": "in Seoul,",
     "home.hero.line3": "writing it down.",
     "home.hero.lede":
@@ -50,7 +50,7 @@ export const ui = {
   },
   ko: {
     "site.title": "noowah",
-    "site.tagline": "글로 남기는 생각들",
+    "site.tagline": "작업대에서 쓰는 기록",
     "post.readMore": "글 읽기",
     "post.back": "목록으로",
     "post.empty": "아직 글이 없습니다. 곧 찾아오세요.",
@@ -72,7 +72,7 @@ export const ui = {
     "area.hobbies.topic3": "",
 
     "home.hero.line1": "서울의",
-    "home.hero.line2": "프론트엔드 개발자,",
+    "home.hero.line2": "개발자,",
     "home.hero.line3": "기록합니다.",
     "home.hero.lede":
       "두 개의 노트: 일하며 만드는 것, 그리고 퇴근 후 분해하는 것. 영어와 한국어로 씁니다.",
