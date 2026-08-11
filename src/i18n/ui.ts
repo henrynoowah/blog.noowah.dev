@@ -17,7 +17,7 @@ export const ui = {
     "post.toc": "On this page",
     "theme.toggle": "Toggle theme",
     "lang.switch": "Switch language",
-    "footer.rights": "Written by hand in Seoul.",
+    "footer.rights": "No ghostwriter but AI.",
 
     "area.dev.label": "Dev",
     "area.dev.description":
@@ -57,7 +57,7 @@ export const ui = {
     "post.toc": "목차",
     "theme.toggle": "테마 전환",
     "lang.switch": "언어 전환",
-    "footer.rights": "서울에서 직접 씁니다.",
+    "footer.rights": "이 글, AI 손 좀 빌렸습니다.",
 
     "area.dev.label": "개발",
     "area.dev.description":
