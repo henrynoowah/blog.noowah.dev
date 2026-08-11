@@ -1,5 +1,5 @@
 ---
-title: '넓은 차단 없이 분산 봇 막기: Azure WAF 운영기'
+title: 'Azure WAF 운영기: 분산 봇 트래픽을 탐지하고 차단하기'
 description: Bot Manager 룰별 분석, JA4 지문의 ALPN 함정, JavaScript Challenge, 그리고 GA 오염 규명까지 — 넓은 차단 없이 봇을 정밀하게 걸러낸 Azure WAF 운영 기록.
 pubDate: 2026-08-10
 tags:
