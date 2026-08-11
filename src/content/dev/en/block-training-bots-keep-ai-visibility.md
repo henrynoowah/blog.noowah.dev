@@ -1,5 +1,5 @@
 ---
-title: 'Why We Block ClaudeBot and GPTBot — Without Losing AI Search Visibility'
+title: Why We Block ClaudeBot and GPTBot — Without Losing AI Search Visibility
 description: A non-dev colleague asked whether blocking ClaudeBot and GPTBot deletes us from AI answers. It doesn't — because one AI vendor runs several bots with different purposes, and we block only the training ones.
 pubDate: 2026-06-22
 tags:
@@ -16,8 +16,8 @@ A colleague from a non-dev team pinged me: "I saw we block **ClaudeBot** and **G
 now and we're doing the opposite?"
 
 It's a fair worry, and the short answer is no — blocking those two costs us zero AI-search
-visibility. The reason is a distinction that's easy to miss: **a single AI vendor doesn't run
-one crawler, it runs several — and they do completely different jobs.** We block only the ones
+visibility. The reason is a distinction that's easy to miss: **a single AI vendor doesn't run**
+**one crawler, it runs several — and they do completely different jobs.** We block only the ones
 that don't affect whether we get cited.
 
 ## One vendor, several bots
@@ -49,7 +49,7 @@ the ones that matter for visibility.
 Two reasons, and neither is "we dislike AI."
 
 - **Training and search are separate systems.** A page being absent from a model's training set
-  has no effect on whether the model's *search* index can find and cite it. Blocking `GPTBot`
+  has no effect on whether the model's _search_ index can find and cite it. Blocking `GPTBot`
   does not remove us from ChatGPT's answers, because ChatGPT's answers are sourced by
   `OAI-SearchBot`, which we allow. The GEO loss people fear simply isn't wired that way.
 - **Training bots have a load history.** `GPTBot` and `ClaudeBot` are the crawlers that have
@@ -63,13 +63,13 @@ bulk-harvested for training while keeping every door open that leads to an AI ci
 sign on the door, not a lock. Well-behaved crawlers — Google, OpenAI, Anthropic — read it and
 obey it, which is exactly why blocking `GPTBot` and `ClaudeBot` there actually stops their
 training crawl. But a malicious scraper or a forged-user-agent botnet doesn't read the sign at
-all; it walks straight in. So `robots.txt` handles the *polite* bots — the ones that identify
+all; it walks straight in. So `robots.txt` handles the _polite_ bots — the ones that identify
 themselves and follow the rules — and nothing else. For the traffic that ignores it, you need
 enforcement at the edge: a [WAF](https://learn.microsoft.com/azure/web-application-firewall/afds/afds-overview)
 to challenge or block suspicious clients, and
 [rate limiting](https://learn.microsoft.com/azure/web-application-firewall/afds/waf-front-door-rate-limit)
 to cap abusive request volume regardless of what UA they claim. `robots.txt` is the first
-layer, not the whole defense — and it's [worth remembering that no crawler is *obligated* to
+layer, not the whole defense — and it's [worth remembering that no crawler is _obligated_ to
 respect it](https://developers.google.com/search/docs/crawling-indexing/robots/intro).
 
 ## How other sites handle it
@@ -88,16 +88,16 @@ user-agents against each. The results fall into three camps:
 
 That last camp is the one to understand, because it's the opposite of what we do. When Stack
 Overflow blocks not just `GPTBot` but `OAI-SearchBot` and `Claude-SearchBot` too, it isn't
-opting out of *training* — it's opting out of **being cited at all**.
+opting out of _training_ — it's opting out of **being cited at all**.
 
 And it goes further than the search index. Stack Overflow also blocks the **on-demand** fetch —
-the request an assistant makes when *you* paste a link and ask it to read that page. So even a
+the request an assistant makes when _you_ paste a link and ask it to read that page. So even a
 direct, user-initiated fetch fails:
 
 ![Claude Desktop failing to fetch stackoverflow.com — "Failed to fetch https://stackoverflow.com"](/uploads/stackoverflow-claude-desktop-blocked.png)
 
 > Ask Claude Desktop "can you access stackoverflow?" and it can't — the fetch is refused at
-`robots.txt`, both for the domain root and for a specific question URL.
+> `robots.txt`, both for the domain root and for a specific question URL.
 
 **Why would a site do that?** For Stack Overflow it's a deliberate business stance, not an
 accident. They've moved to monetize their corpus through
@@ -108,7 +108,7 @@ chose to push AI companies toward paid access. It works as leverage, but the sid
 concrete: if you've noticed assistants leaning on other sources where they used to quote Stack
 Overflow, this is a large part of why.
 
-That's exactly the mistake we're *not* making. "Block everything" and "block selectively" look
+That's exactly the mistake we're _not_ making. "Block everything" and "block selectively" look
 almost identical in a config file and are opposite strategies in practice. Unless being
 uncitable is a deliberate business decision — as it is for Stack Overflow — blocking the search
 and on-demand bots along with the training bot just quietly removes you from AI answers for no
@@ -117,13 +117,13 @@ gain. We block training; we stay citable.
 ## What to check when a request lands on you
 
 Requests arrive as bot names — "block this," "open that." As the developer, the name is the
-*last* thing to act on. Before you touch the file, run through these:
+_last_ thing to act on. Before you touch the file, run through these:
 
 - **What's the bot's actual purpose?** Classify it against the vendor's docs and published IP
   ranges — training → blocking is safe, search/on-demand → blocking costs citations. Never
   apply a name-only request ("just add GPTBot") as-is.
 - **What is the requester actually trying to do?** "Reduce load" and "get us into AI answers"
-  touch *different* bots. Match the change to the goal, not to whichever bot name they happened
+  touch _different_ bots. Match the change to the goal, not to whichever bot name they happened
   to mention.
 - **Is `robots.txt` even the right layer?** If it's a forged-UA botnet or an aggressive
   scraper, editing this file does nothing — that's a WAF / rate-limit problem. `robots.txt`
@@ -135,5 +135,5 @@ Requests arrive as bot names — "block this," "open that." As the developer, th
   as a wrong block.
 
 Blocking `ClaudeBot` and `GPTBot` isn't a stance against AI search. It's the opposite — done
-with this checklist, it's what lets us decline bulk training crawls *and* keep every path to an
+with this checklist, it's what lets us decline bulk training crawls _and_ keep every path to an
 AI citation open at the same time.
