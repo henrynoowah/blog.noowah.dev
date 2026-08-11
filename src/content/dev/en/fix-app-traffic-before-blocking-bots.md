@@ -7,7 +7,7 @@ tags:
   - waf
   - security
   - bot-management
-draft: true
+draft: false
 ---
 
 When bot traffic grows, blocking it is the most visible response. But for a global

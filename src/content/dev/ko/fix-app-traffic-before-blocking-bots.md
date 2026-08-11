@@ -7,7 +7,7 @@ tags:
   - waf
   - security
   - bot-management
-draft: true
+draft: false
 ---
 
 봇 트래픽에 대응할 때 "차단"은 가장 눈에 잘 보이는 선택지다. 하지만 글로벌 의료관광
