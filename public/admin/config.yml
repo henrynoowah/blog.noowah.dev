@@ -1,3 +1,5 @@
+app_title: NoowaH Blog, Admin
+
 backend:
   name: github
   repo: henrynoowah/blog.noowah.dev
