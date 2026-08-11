@@ -1,8 +1,9 @@
 ---
-title: "안녕하세요"
-description: "이 블로그의 첫 글입니다 — 왜 시작했는지, 앞으로 무엇이 올지."
+title: 안녕하세요
+description: 이 블로그의 첫 글입니다 — 왜 시작했는지, 앞으로 무엇이 올지.
 pubDate: 2026-08-10
-tags: ["meta"]
+tags:
+  - meta
 ---
 
 환영합니다. **blog.noowah.dev**의 첫 글이며, 마크다운으로 작성되고

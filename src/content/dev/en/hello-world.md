@@ -1,8 +1,9 @@
 ---
-title: "Hello, World"
-description: "The first post on this blog — why it exists and what's coming."
+title: Hello, World
+description: The first post on this blog — why it exists and what's coming.
 pubDate: 2026-08-10
-tags: ["meta"]
+tags:
+  - meta
 ---
 
 Welcome. This is the first post on **blog.noowah.dev**, written in Markdown and
