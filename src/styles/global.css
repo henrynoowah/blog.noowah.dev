@@ -7,9 +7,11 @@
      Hangul falls through to Gothic A1 (display) / Noto Sans KR (body). Gothic A1
      over Black Han Sans: the latter ships one ultra-heavy weight and ignores
      font-weight, so Korean headings could never be tuned lighter. */
-  --font-display: "Jost", "Gothic A1", sans-serif;
-  --font-body: "Jost", "Noto Sans KR", sans-serif;
-  --font-mono: "IBM Plex Mono", "Noto Sans Mono KR", monospace;
+  /* Self-hosted via Astro Fonts API (see astro.config.mjs). --font-jost has no
+     fallback so Korean glyphs fall through to the display/body Korean face. */
+  --font-display: var(--font-jost), var(--font-gothic-a1);
+  --font-body: var(--font-jost), var(--font-noto-kr);
+  --font-mono: var(--font-ibm-mono), monospace;
 }
 
 /* Bauhaus structure, earth-pigment palette: terracotta, olive, ochre, slate
